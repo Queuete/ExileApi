@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using GameOffsets.Native;
 
 namespace GameOffsets
@@ -20,7 +20,8 @@ namespace GameOffsets
         // Use the one inside the ActionPtr struct (i.e. ActionWrapperOffsets).
         // That one works for all kind of skills.
         // [FieldOffset(0x128)] public Vector2 SkillDestination;
-        [FieldOffset(0x510)] public NativePtrArray ActorSkillsArray;
+        [FieldOffset(0x650)] public NativePtrArray ActorSkillsArray;
+
         [FieldOffset(0x540)] public NativePtrArray ActorVaalSkills;
         [FieldOffset(0x578)] public NativePtrArray DeployedObjectArray;
     }
