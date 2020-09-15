@@ -7,12 +7,12 @@ namespace GameOffsets
     public struct ModsComponentOffsets
     {
         public static readonly int HumanStats = 0x20;
-        [FieldOffset(0x30)] public long UniqueName; 
-        [FieldOffset(0xA8)] public bool Identified; 
+        [FieldOffset(0x30)] public long UniqueName;
+        [FieldOffset(0xA8)] public bool Identified;
         [FieldOffset(0xAC)] public int ItemRarity;
         [FieldOffset(0xB0)] public NativePtrArray implicitMods;
         [FieldOffset(0xC8)] public NativePtrArray explicitMods;
-		[FieldOffset(0xE0)] public NativePtrArray enchantMods;
+        [FieldOffset(0xE0)] public NativePtrArray enchantMods;
         [FieldOffset(0x1A8)] public NativePtrArray GetImplicitStats;
         [FieldOffset(0x1A8)] public NativePtrArray GetStats;
         [FieldOffset(0x1D8)] public NativePtrArray GetCraftedStats;
