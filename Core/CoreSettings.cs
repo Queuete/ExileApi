@@ -98,6 +98,8 @@ namespace ExileCore
         public ListNode Font { get; set; } = new ListNode {Values = new List<string> {"Not found"}};
         [IgnoreMenu] // "Currently not works. Because this option broke calculate how much pixels needs for render."
         public RangeNode<int> FontSize { get; set; } = new RangeNode<int>(13, 7, 36);
+        [Menu("Font Spacing", 2, 5000)]
+        public RangeNode<float> FontSpacing { get; set; } = new RangeNode<float>(1, 0.5f, 2);
         [Menu("Volume", 3, 5000)]
         public RangeNode<int> Volume { get; set; } = new RangeNode<int>(100, 0, 100);
         #endregion

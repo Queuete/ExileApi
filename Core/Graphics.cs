@@ -92,12 +92,12 @@ namespace ExileCore
 
         public Vector2N MeasureText(string text)
         {
-            return ImGuiRender.MeasureText(text);
+            return ImGuiRender.MeasureText(text).Mult(_settings.FontSpacing, 1);
         }
 
         public Vector2N MeasureText(string text, int height)
         {
-            return ImGuiRender.MeasureText(text, height);
+            return ImGuiRender.MeasureText(text, height).Mult(_settings.FontSpacing, 1);
         }
 
         public void DrawLine(Vector2N p1, Vector2N p2, float borderWidth, Color color)
