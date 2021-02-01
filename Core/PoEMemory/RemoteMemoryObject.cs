@@ -55,9 +55,9 @@ namespace ExileCore.PoEMemory
             return GetObject<T>(Address + offset);
         }
 
-        public T GetObject<T>(long address) where T : RemoteMemoryObject, new()
+        public T GetObject<T>(long? address) where T : RemoteMemoryObject, new()
         {
-            var t = new T {Address = address};
+            var t = address != null ? new T {Address = address} : null;
             return t;
         }
 

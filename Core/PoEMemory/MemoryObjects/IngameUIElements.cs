@@ -58,7 +58,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
         // This offset points to the chat body panel that is a grandchild of the previous element.
         // Chatbox.Parent.Parent.Parent is equivalent to ChatBoxRoot.
-        public PoeChatElement ChatBox => GetObject<PoeChatElement>(ChatBoxRoot.GetChildAtIndex(1).GetChildAtIndex(2).GetChildAtIndex(1).Address);
+        public PoeChatElement ChatBox => GetObject<PoeChatElement>(ChatBoxRoot?.GetChildAtIndex(1)?.GetChildAtIndex(2)?.GetChildAtIndex(1)?.Address);
         public IList<string> ChatMessages => ChatBox.Children.Select(x => x.Text).ToList();
         public Element QuestTracker => GetObject<Element>(IngameUIElementsStruct.QuestTracker);
         public QuestRewardWindow QuestRewardWindow => GetObject<QuestRewardWindow>(IngameUIElementsStruct.QuestRewardWindow);
