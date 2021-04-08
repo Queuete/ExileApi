@@ -234,5 +234,27 @@ namespace ExileCore.PoEMemory
         {
             return index >= ChildCount ? null : GetObject<Element>(M.Read<long>(Address + ChildStartOffset, index * 8));
         }
+         public void GetAllStrings(List<string> res) {
+            if(Text?.Length > 0) {
+                res.Add(Text);
+            }
+            foreach(var ch in Children)
+                ch.GetAllStrings(res);
+        }
+        public void GetAllTextElements(List<Element> res) {
+            if(Text?.Length > 0) {
+                res.Add(this);
+            }
+            foreach(var ch in Children)
+                ch.GetAllTextElements(res);
+        }
+        public void GetElementByString(string str, ref Element res) {
+            if(Text == str) {
+                res = this;
+                return;
+            }
+            foreach(var ch in Children)
+                ch.GetElementByString(str, ref res);
+        }
     }
 }
