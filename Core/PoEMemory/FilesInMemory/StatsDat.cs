@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ExileCore.Shared.Enums;
 using ExileCore.Shared.Interfaces;
 
@@ -31,6 +32,55 @@ namespace ExileCore.PoEMemory.FilesInMemory
                 records[r.Key] = r;
                 recordsById[r.ID] = r;
             }
+        }
+
+        /// <summary>
+        /// Code for GameStat.cs
+        /// </summary>
+        public string GameStatCode
+        {
+            get
+            {
+                var sb = new StringBuilder(
+                    @"namespace ExileCore.Shared.Enums
+{
+    public enum GameStat
+    {
+");
+                foreach (var stat in recordsById.OrderBy(x => x.Key))
+                    sb.AppendFormat("\t\t/// <summary>\n\t\t/// {0}\n\t\t/// </summary>\n\t\t{1} = {2},\n\n",
+                        stat.Value.Key, GetNameFromId(stat.Value.Key), stat.Key);
+                sb.Append(@"
+    }
+}
+");
+                return sb.ToString();
+            }
+        }
+
+        private static string GetNameFromId(string id)
+        {
+            var sb = new StringBuilder();
+            var uppercase = true;
+            foreach (var ch in id)
+            {
+                switch (ch)
+                {
+                    case '_':
+                        uppercase = true;
+                        break;
+                    case '+':
+                        break;
+                    case '%':
+                        sb.Append("Pct");
+                        break;
+                    default:
+                        sb.Append(uppercase ? char.ToUpper(ch) : ch);
+                        uppercase = false;
+                        break;
+                }
+            }
+            return sb.ToString();
         }
 
         public class StatRecord
