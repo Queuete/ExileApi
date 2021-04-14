@@ -25,6 +25,8 @@ namespace ExileCore
         public ToggleNode ForceForeground { get; set; } = new ToggleNode(false);
         [Menu("Automatically Download Update", 5, 1000)]
         public ToggleNode AutoPrepareUpdate { get; set; } = new ToggleNode(true);
+        [Menu("Use SoundController", 6, 1000)]
+        public ToggleNode UseSoundController { get; set; } = new ToggleNode(false);
         #endregion
 
         #region messages
