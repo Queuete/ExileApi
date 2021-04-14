@@ -122,7 +122,15 @@ namespace ExileCore
                 {
                     _dx11 = new DX11(form, _coreSettings);
                 }
-
+                if(_coreSettings.UseSoundController) { 
+                    if(Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1) {
+                        DebugWindow.LogMsg($"SoundController init skipped because win7 issue.");
+                    }
+                    else {
+                        _soundController = new SoundController("Sounds");
+                        _coreSettings.Volume.OnValueChanged += (sender, i) => { _soundController.SetVolume(i / 100f); };
+                    }
+                }
                 if (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor == 1)
                 {
                     DebugWindow.LogMsg($"SoundController init skipped because win7 issue.");
@@ -131,7 +139,6 @@ namespace ExileCore
                 {
                     _soundController = new SoundController("Sounds");
                 }
-                _coreSettings.Volume.OnValueChanged += (sender, i) => { _soundController.SetVolume(i / 100f); };
                 _coreSettings.VSync.OnValueChanged += (obj, b) => { _dx11.VSync = _coreSettings.VSync.Value; };
                 Graphics = new Graphics(_dx11, _coreSettings);
 
