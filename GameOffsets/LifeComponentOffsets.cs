@@ -7,7 +7,7 @@ namespace GameOffsets
     public struct LifeComponentOffsets
     {
         [FieldOffset(0x8)] public long Owner;
-        [FieldOffset(0x180)] public NativePtrArray Buffs;  // wrong?
+        [FieldOffset(0x158)] public NativePtrArray Buffs;
 
         [FieldOffset(0x1B0)] public float ManaRegen;
         [FieldOffset(0x1B4)] public int MaxMana;
