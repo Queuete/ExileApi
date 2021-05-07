@@ -250,7 +250,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
             container.DebugInformation.Tick = sw.Elapsed.TotalMilliseconds + jobsTimeSum;
         }
 
-        private uint ParseEntity(long addrEntity, Dictionary<uint, Entity> entityCache, uint entitiesVersion, Stack<Entity> result,
+        private uint ParseEntity(long addrEntity, IReadOnlyDictionary<uint, Entity> entityCache, uint entitiesVersion, Stack<Entity> result,
             bool parseServerEntities)
         {
             var entityId = M.Read<uint>(addrEntity + 0x60);

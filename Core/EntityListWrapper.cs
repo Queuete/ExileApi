@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using ExileCore.PoEMemory.Elements;
 using ExileCore.PoEMemory.MemoryObjects;
@@ -13,7 +14,7 @@ namespace ExileCore
     {
         public Stack<Entity> Simple { get; set; }
         public Queue<uint> KeyForDelete { get; set; }
-        public Dictionary<uint, Entity> EntityCache { get; set; }
+        public ConcurrentDictionary<uint, Entity> EntityCache { get; set; }
         public MultiThreadManager MultiThreadManager { get; set; }
         public Func<ToggleNode> ParseServer { get; set; }
         public Func<long> EntitiesCount { get; set; }
@@ -29,7 +30,7 @@ namespace ExileCore
     {
         private readonly CoreSettings _settings;
         private readonly int coroutineTimeWait = 100;
-        private readonly Dictionary<uint, Entity> entityCache;
+        private readonly ConcurrentDictionary<uint, Entity> entityCache;
         private readonly GameController gameController;
         private readonly Queue<uint> keysForDelete = new Queue<uint>(24);
 
@@ -44,7 +45,7 @@ namespace ExileCore
             this.gameController = gameController;
             _settings = settings;
 
-            entityCache = new Dictionary<uint, Entity>(1000);
+            entityCache = new ConcurrentDictionary<uint, Entity>();
             gameController.Area.OnAreaChange += AreaChanged;
             EntitiesVersion = 0;
 
@@ -181,7 +182,7 @@ namespace ExileCore
                 if (entityCache.TryGetValue(key, out var entity))
                 {
                     EntityRemoved?.Invoke(entity);
-                    entityCache.Remove(key);
+                    entityCache.TryRemove(key, out _);
                 }
             }
 
