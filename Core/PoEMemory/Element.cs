@@ -44,6 +44,7 @@ namespace ExileCore.PoEMemory
         public float X => Elem.X;
         public float Y => Elem.Y;
         public Element Tooltip => Address == 0 ? null : GetObject<Element>(M.Read<long>(Address + 0x338));
+        public Element Tooltip2 => Address == 0 ? null : GetObject<Element>(M.Read<long>(Address + 0x418)); //working with Ultimatum window with three selection icons
         public float Scale => Elem.Scale;
         public float Width => Elem.Width;
         public float Height => Elem.Height;
