@@ -45,6 +45,7 @@ namespace ExileCore.PoEMemory
         public float Y => Elem.Y;
         public Element Tooltip => Address == 0 ? null : GetObject<Element>(M.Read<long>(Address + 0x338));
         public Element Tooltip2 => Address == 0 ? null : GetObject<Element>(M.Read<long>(Address + 0x418)); //working with Ultimatum window with three selection icons
+        public bool  IsMouseOver => M.Read<byte>(Address + 0x238) == 1; //Works with most button-like elements. Doesn't work with elem that look like a link (in NPC dialogs)
         public float Scale => Elem.Scale;
         public float Width => Elem.Width;
         public float Height => Elem.Height;
