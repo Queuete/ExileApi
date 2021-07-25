@@ -15,7 +15,7 @@ namespace GameOffsets
         [FieldOffset(0xA8)] public bool Identified;
         [FieldOffset(0xAC)] public int ItemRarity;
         [FieldOffset(0xB0)] public NativePtrArray ImplicitModsArray;
-        [FieldOffset(0xC8)] public NativePtrArray ExplicitModsArray;
+        [FieldOffset(0xD0)] public NativePtrArray ExplicitModsArray;
         [FieldOffset(0xE0)] public NativePtrArray EnchantedModsArray;
         [FieldOffset(0x1C0)] public NativePtrArray ImplicitStatsArray;
         [FieldOffset(0x1D8)] public NativePtrArray EnchantedStatsArray;
