@@ -16,8 +16,8 @@ namespace GameOffsets
         [FieldOffset(0x520)] public long OpenRightPanel;
         [FieldOffset(0x540)] public long InventoryPanel;
         [FieldOffset(0x508)] public long StashElement; // correct? it moved
-        [FieldOffset(0x570)] public long TreePanel;
-        [FieldOffset(0x578)] public long AtlasPanel;
+        [FieldOffset(0x578)] public long TreePanel; //not actually correct
+        [FieldOffset(0x5F8)] public long AtlasPanel;
         [FieldOffset(0x5A8)] public long WorldMap;
         [FieldOffset(0x648)] public long Map;
         [FieldOffset(0x650)] public long itemsOnGroundLabelRoot;
@@ -29,7 +29,7 @@ namespace GameOffsets
         [FieldOffset(0x710)] public long TradeWindow; // 78 -> F0 (patch 16.7.21)
 
         [FieldOffset(0x6B0)] public long MapDeviceWindow;
-        [FieldOffset(0x708)] public long IncursionWindow;
+        [FieldOffset(0x7A8)] public long IncursionWindow;
         [FieldOffset(0x728)] public long DelveWindow;
         [FieldOffset(0x738)] public long ZanaMissionChoice;
         [FieldOffset(0x748)] public long BetrayalWindow;
