@@ -46,8 +46,8 @@ namespace ExileCore.PoEMemory.Elements
             }
         }
 
-        public string Text2 => NativeStringReader.ReadString(Address + 0x2E8, M);
+        public string Text2 => NativeStringReader.ReadString(Address + 0x2E8+8, M);
 
-        public string Text3 => NativeStringReader.ReadStringLong(Address + 0x2E8, M);
+        public string Text3 => NativeStringReader.ReadStringLong(Address + 0x2E8+8, M);
     }
 }

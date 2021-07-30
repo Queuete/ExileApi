@@ -225,13 +225,13 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
             switch (parentChildCount)
             {
-                case 0x6f:
+                case 0x6F:
                     _cacheInventoryType = InventoryType.EssenceStash;
                     break;
-                case 0x48:
+                case 0x4B:
                     _cacheInventoryType = InventoryType.CurrencyStash;
                     break;
-                case 0x5A:
+                case 0x86:
                     _cacheInventoryType = InventoryType.FragmentStash;
                     break;
                 case 0x5:
@@ -253,13 +253,13 @@ namespace ExileCore.PoEMemory.MemoryObjects
                 case 0x23:
                     _cacheInventoryType = InventoryType.DelveStash;
                     break;
-                case 0x50:
+                case 0x52:
                     _cacheInventoryType = InventoryType.BlightStash;
                     break;
-                case 0x1c:
+                case 0x1C:
                     _cacheInventoryType = InventoryType.DeliriumStash;
                     break;
-                case 0xe:
+                case 0x11:
                     _cacheInventoryType = InventoryType.MetamorphStash;
                     break;
                 case 0x9:

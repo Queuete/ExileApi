@@ -16,7 +16,7 @@ namespace ExileCore.PoEMemory.Elements
             Extensions.GetOffset<IngameUElementsOffsets>(nameof(IngameUElementsOffsets.itemsOnGroundLabelRoot));
 
         private ToolTipType? toolTip;
-        public Element InventoryItemTooltip => ReadObject<Element>(Address + 0x338);
+        public Element InventoryItemTooltip => ReadObject<Element>(Address + 0x340);
         public Element ItemInChatTooltip => ReadObject<Element>(Address + 0x1A8);
         public ItemOnGroundTooltip ToolTipOnGround => TheGame.IngameState.IngameUi.ItemOnGroundTooltip;
         public int InventPosX => M.Read<int>(Address + InventPosXOff);
@@ -89,7 +89,7 @@ namespace ExileCore.PoEMemory.Elements
                         var e = le.ItemOnHover;
                         return e?.GetComponent<WorldItem>()?.ItemEntity;
                     case ToolTipType.InventoryItem:
-                        return ReadObject<Entity>(Address + 0x388);
+                        return ReadObject<Entity>(Address + 0x390);
                     case ToolTipType.ItemInChat:
                         // currently cannot find it.
                         return null;

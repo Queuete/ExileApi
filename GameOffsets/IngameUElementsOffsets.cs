@@ -10,7 +10,7 @@ namespace GameOffsets
         [FieldOffset(0x380)] public long Mouse;
         [FieldOffset(0x388)] public long SkillBar;
         [FieldOffset(0x390)] public long HiddenSkillBar; 
-        [FieldOffset(0x410)] public long ChatPanel; 
+        [FieldOffset(0x420)] public long ChatPanel; 
         [FieldOffset(0x490)] public long QuestTracker;
         [FieldOffset(0x518)] public long OpenLeftPanel;
         [FieldOffset(0x520)] public long OpenRightPanel;
@@ -22,7 +22,7 @@ namespace GameOffsets
         [FieldOffset(0x648)] public long Map;
         [FieldOffset(0x650)] public long itemsOnGroundLabelRoot;
         [FieldOffset(0x650)] public long BanditDialog;
-        [FieldOffset(0x6C8)] public long NpcDialog;
+        [FieldOffset(0x6D8)] public long NpcDialog;
         [FieldOffset(0x6E0)] public long QuestRewardWindow;
         [FieldOffset(0x6f8)] public long PurchaseWindow; // 68 -> E8 (patch 16.7.21)
         [FieldOffset(0x708)] public long SellWindow; // wrong (patch 16.7.21)

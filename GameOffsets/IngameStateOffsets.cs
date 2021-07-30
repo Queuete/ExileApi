@@ -11,14 +11,13 @@ namespace GameOffsets
         [FieldOffset(0x498)] public long ServerData;
         [FieldOffset(0x5C0)] public long UIRoot;
         [FieldOffset(0x608)] public long UIHoverElement;
-        [FieldOffset(0x5f8)] public long UIHoverTooltip; 
-        [FieldOffset(0x608)] public long UIHover; //telling different hovered objects
-        [FieldOffset(0x5C4)] public float UIHoverX;
-        [FieldOffset(0x5C8)] public float UIHoverY;
-        [FieldOffset(0x5CC)] public float CurentUElementPosX;
-        [FieldOffset(0x5D0)] public float CurentUElementPosY;
-        [FieldOffset(0x670)] public float TimeInGame; 
-        [FieldOffset(0x674)] public float TimeInGameF; 
+        [FieldOffset(0x608)] public long UIHover; // element which is currently hovered
+        [FieldOffset(0x600)] public float UIHoverPosX; // top left corner of currently hovered UI element
+        [FieldOffset(0x604)] public float UIHoverPosY; // top left corner of currently hovered UI element
+        [FieldOffset(0x644)] public float MousePosX;
+        [FieldOffset(0x648)] public float MousePosY;
+        [FieldOffset(0x670)] public float TimeInGameF; // time since last frame in seconds
+        [FieldOffset(0x674)] public float TimeInGame; // total time in game in seconds
         [FieldOffset(0x618)] public int DiagnosticInfoType;
         [FieldOffset(0x848)] public long LatencyRectangle;
         [FieldOffset(0xCE8)] public long FrameTimeRectangle;

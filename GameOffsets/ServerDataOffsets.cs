@@ -43,8 +43,8 @@ namespace GameOffsets
         [FieldOffset(0x8219 - Skip)] public long PlayerRelatedData;
         [FieldOffset(0x82b8 - Skip)] public byte NetworkState;
         [FieldOffset(0x82d0 - Skip)] public NativeStringU League;
-        [FieldOffset(0x8350 - Skip)] public float TimeInGame;
-        [FieldOffset(0x8358 - Skip)] public int Latency;
+        [FieldOffset(0x8360 - Skip)] public float TimeInGame;
+        [FieldOffset(0x8368 - Skip)] public int Latency;
         [FieldOffset(0x8370 - Skip)] public NativePtrArray PlayerStashTabs;
         [FieldOffset(0x8378 - Skip)] public NativePtrArray GuildStashTabs;
         [FieldOffset(0x83F0 - Skip)] public long FriendsList;
@@ -58,7 +58,7 @@ namespace GameOffsets
         [FieldOffset(0x8088 - Skip)] public long GuildList;
         //[FieldOffset(0x8098 - Skip)] public NativePtrArray GuildArray;
         [FieldOffset(0x80D8 - Skip)] public long GuildNameAddress;
-        [FieldOffset(0x80E8 - Skip)] public SkillBarIdsStruct SkillBarIds;
+        [FieldOffset(0x8590 - Skip)] public SkillBarIdsStruct SkillBarIds;
         [FieldOffset(0x8138 - Skip)] public NativePtrArray NearestPlayers;
         //[FieldOffset(0x8168 - Skip)] public NativePtrArray MinimapIcons;
         //[FieldOffset(0x8188 - Skip)] public NativePtrArray LocalPlayer;
@@ -97,8 +97,8 @@ namespace GameOffsets
         [FieldOffset(0x92AD - Skip)] public byte MonstersRemaining;
         //[FieldOffset(0x9328 - Skip)] public long LeftIncursionArchitectKey;
         //[FieldOffset(0x9338 - Skip)] public long RightIncursionArchitectKey;
-        [FieldOffset(0x9358 - Skip)] public int CurrentAzuriteAmount;
-        [FieldOffset(0x9368 - Skip)] public ushort CurrentSulphiteAmount;
+        [FieldOffset(0x9820 - Skip)] public int CurrentAzuriteAmount;
+        [FieldOffset(0x9830 - Skip)] public ushort CurrentSulphiteAmount;
 
         //[FieldOffset(0x9590 - Skip)] public long DeliriumRewardInfo;
         //[FieldOffset(0x95A8 - Skip)] public long BlueprintRevealInfo;
