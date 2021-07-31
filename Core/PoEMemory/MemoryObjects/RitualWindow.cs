@@ -11,7 +11,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         private IList<NormalInventoryItem> ExtractNormalInventoryItems(IList<Element> children)
         {
             var resultList = new List<NormalInventoryItem>();
-            if (resultList.Count > 0)
+            if (children.Count > 0)
             {
                 for (var i = 1; i < children.Count; i++)
                 {

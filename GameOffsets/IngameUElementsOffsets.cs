@@ -16,7 +16,7 @@ namespace GameOffsets
         [FieldOffset(0x520)] public long OpenRightPanel;
         [FieldOffset(0x540)] public long InventoryPanel;
         [FieldOffset(0x508)] public long StashElement; // correct? it moved
-        [FieldOffset(0x578)] public long TreePanel; //not actually correct
+        [FieldOffset(0x570)] public long TreePanel;
         [FieldOffset(0x5F8)] public long AtlasPanel;
         [FieldOffset(0x5A8)] public long WorldMap;
         [FieldOffset(0x648)] public long Map;
