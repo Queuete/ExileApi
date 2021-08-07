@@ -44,7 +44,7 @@ namespace GameOffsets
         [FieldOffset(0x8E0)] public long DelveDarkness;
         [FieldOffset(0x920)] public long AreaInstanceUi;
         [FieldOffset(0xA70)] public long GemLvlUpPanel;
-        [FieldOffset(0xA78)] public long InvitesPanel;
+        [FieldOffset(0xA20)] public long InvitesPanel;
         [FieldOffset(0xB50)] public long ItemOnGroundTooltip;
         [FieldOffset(0xAA0)] public long MapTabWindowStartPtr;
 
