@@ -15,7 +15,7 @@ namespace GameOffsets
         [FieldOffset(0x1F0)] public float Rotation;
         [FieldOffset(0x208)] public float Scale;
         [FieldOffset(0x20C)] public int Size;
-        [FieldOffset(0x218)] public Vector2 WorldPosition;
+        [FieldOffset(0x22C)] public Vector2 WorldPosition; //3.16.2b
         [FieldOffset(0x22C)] public float WorldX; // 3.16.2b
         [FieldOffset(0x230)] public float WorldY; // 3.16.2b
     }
