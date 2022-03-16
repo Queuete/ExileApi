@@ -14,6 +14,6 @@ namespace GameOffsets
         [FieldOffset(0x688)] public long LocalPlayer;
         [FieldOffset(0x738)] public long EntityList;
         [FieldOffset(0x740)] public long EntitiesCount;
-        [FieldOffset(0x8C8)] public TerrainData Terrain; //3.16.3
+        [FieldOffset(0x8D0)] public TerrainStruct Terrain;  ///3.17.3  =>8E8 from Game.IngameState.Data
     }
 }
