@@ -3,11 +3,13 @@
     <RootNamespace>ExileCore</RootNamespace>
     <AssemblyName>ExileCore</AssemblyName>
     <TargetFramework>net48</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>7.3</LangVersion>
     <AssemblyTitle>Core</AssemblyTitle>
     <Product>Core</Product>
     <Copyright>Copyright ©  2018</Copyright>
     <OutputPath>..\..\PoeHelper\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
