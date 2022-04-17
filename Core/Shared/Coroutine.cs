@@ -24,14 +24,24 @@ namespace ExileCore.Shared
             Running = autoStart;
             Started = DateTime.Now;
             Owner = owner;
-            TimeoutForAction = condition switch
+            switch (condition)
             {
-                WaitTime time => time.Milliseconds.ToString(),
-                WaitRender render => render.HowManyRenderCountWait.ToString(),
-                WaitRandom random => random.Timeout,
-                WaitFunction _ => "Function -1",
-                _ => TimeoutForAction
-            };
+              case WaitTime time:
+                TimeoutForAction = time.Milliseconds.ToString();
+                break;
+              case WaitRender render:
+                TimeoutForAction = render.HowManyRenderCountWait.ToString();
+                break;
+              case WaitRandom random:
+                TimeoutForAction = random.Timeout;
+                break;
+              case WaitFunction _:
+                TimeoutForAction = "Function -1";
+                break;
+              default:
+                TimeoutForAction = TimeoutForAction;
+                break;
+            }
 
             Action = action;
             Condition = condition;

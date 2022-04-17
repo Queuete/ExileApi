@@ -15,7 +15,7 @@ namespace ExileCore.PoEMemory.FilesInMemory
         }
 
         public Dictionary<int, PassiveSkill> PassiveSkillsDictionary { get; } = new Dictionary<int, PassiveSkill>();
-        public new IList<PassiveSkill> EntriesList => _EntriesList ??= base.EntriesList.ToList();
+        public new IList<PassiveSkill> EntriesList => _EntriesList = _EntriesList ?? base.EntriesList.ToList();
 
         public PassiveSkill GetPassiveSkillByPassiveId(int index)
         {

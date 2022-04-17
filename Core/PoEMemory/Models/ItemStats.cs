@@ -15,7 +15,7 @@ namespace ExileCore.PoEMemory.Models
         public ItemStats(Entity item)
         {
             this.item = item;
-            translate ??= new StatTranslator();
+            translate = translate ?? new StatTranslator();
             stats = new float[Enum.GetValues(typeof(ItemStatEnum)).Length];
             if (item.HasComponent<Sockets>()) ParseSockets();
             if (item.HasComponent<Mods>()) ParseExplicitMods();

@@ -15,15 +15,15 @@ namespace ExileCore.PoEMemory.MemoryObjects
         private ModsDat.ModRecord mod;
         private string recipeId;
         public int Id { get; internal set; }
-        public string RecipeId => recipeId ??= M.ReadStringU(M.Read<long>(Address));
+        public string RecipeId => recipeId = recipeId ?? M.ReadStringU(M.Read<long>(Address));
         public int MinLevel => minLevel != -1 ? minLevel : minLevel = M.Read<int>(Address + 0x8);
-        public BestiaryFamily BestiaryFamily => bestiaryFamily ??= BestiaryGroup?.Family;
-        public BestiaryGroup BestiaryGroup => bestiaryGroup ??= BestiaryCapturableMonster?.BestiaryGroup;
-        public BestiaryGenus BestiaryGenus => bestiaryGenus ??= BestiaryCapturableMonster?.BestiaryGenus;
+        public BestiaryFamily BestiaryFamily => bestiaryFamily = bestiaryFamily ?? BestiaryGroup?.Family;
+        public BestiaryGroup BestiaryGroup => bestiaryGroup = bestiaryGroup ?? BestiaryCapturableMonster?.BestiaryGroup;
+        public BestiaryGenus BestiaryGenus => bestiaryGenus = bestiaryGenus ?? BestiaryCapturableMonster?.BestiaryGenus;
         public ModsDat.ModRecord Mod =>
-            mod ??= TheGame.Files.Mods.GetModByAddress(M.Read<long>(Address + 0x34));
+            mod = mod ?? TheGame.Files.Mods.GetModByAddress(M.Read<long>(Address + 0x34));
         public BestiaryCapturableMonster BestiaryCapturableMonster =>
-            bestiaryCapturableMonster ??= TheGame.Files.BestiaryCapturableMonsters.GetByAddress(M.Read<long>(Address + 0x3C));
+            bestiaryCapturableMonster = bestiaryCapturableMonster ?? TheGame.Files.BestiaryCapturableMonsters.GetByAddress(M.Read<long>(Address + 0x3C));
 
         public override string ToString()
         {

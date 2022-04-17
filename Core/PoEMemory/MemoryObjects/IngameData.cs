@@ -34,7 +34,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public Entity LocalPlayer => _LocalPlayer.Value;
         public ServerData ServerData => _ServerData.Value;
         public long EntitiesTest => DataStruct.EntityList;
-        public EntityList EntityList => _EntityList ??= GetObject<EntityList>(DataStruct.EntityList);
+        public EntityList EntityList => _EntityList = _EntityList ?? GetObject<EntityList>(DataStruct.EntityList);
         private long LabDataPtr => _IngameData.Value.LabDataPtr;
         public LabyrinthData LabyrinthData => LabDataPtr == 0 ? null : GetObject<LabyrinthData>(LabDataPtr);
         public TerrainData Terrain => _IngameData.Value.Terrain;

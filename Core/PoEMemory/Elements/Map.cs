@@ -14,11 +14,11 @@ namespace ExileCore.PoEMemory.Elements
         //public Element MapProperties => ReadObjectAt<Element>(0x1FC + OffsetBuffers);
         private SubMap _largeMap;
         private SubMap _smallMap;
-        public SubMap LargeMap => _largeMap ??= ReadObjectAt<SubMap>(0x280);
+        public SubMap LargeMap => _largeMap = _largeMap ?? ReadObjectAt<SubMap>(0x280);
         public float LargeMapShiftX => LargeMap.Shift.X;
         public float LargeMapShiftY => LargeMap.Shift.Y;
         public float LargeMapZoom => LargeMap.Zoom;
-        public SubMap SmallMiniMap => _smallMap ??= ReadObjectAt<SubMap>(0x288);
+        public SubMap SmallMiniMap => _smallMap = _smallMap ?? ReadObjectAt<SubMap>(0x288);
         public float SmallMinMapX => SmallMiniMap.Shift.X;
         public float SmallMinMapY => SmallMiniMap.Shift.Y;
         public float SmallMinMapZoom => SmallMiniMap.Zoom;

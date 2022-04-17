@@ -37,11 +37,11 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public TradeWindow TradeWindow => GetObject<TradeWindow>(IngameUIElementsStruct.TradeWindow);
         public NpcDialog NpcDialog => GetObject<NpcDialog>(IngameUIElementsStruct.NpcDialog);
         public BanditDialog BanditDialog => GetObject<BanditDialog>(IngameUIElementsStruct.BanditDialog);
-        public Element PurchaseWindow => _purchaseWindow ??= GetObject<Element>(IngameUIElementsStruct.PurchaseWindow);
+        public Element PurchaseWindow => _purchaseWindow = _purchaseWindow ?? GetObject<Element>(IngameUIElementsStruct.PurchaseWindow);
 
         public Element HaggleWindow =>
-            _haggleWindow ??= GetObject<Element>(IngameUIElementsStruct.ExpeditionPurchaseWindow);
-        public SubterraneanChart DelveWindow => _DelveWindow ??= GetObject<SubterraneanChart>(IngameUIElementsStruct.DelveWindow);
+            _haggleWindow = _haggleWindow ?? GetObject<Element>(IngameUIElementsStruct.ExpeditionPurchaseWindow);
+        public SubterraneanChart DelveWindow => _DelveWindow = _DelveWindow ?? GetObject<SubterraneanChart>(IngameUIElementsStruct.DelveWindow);
         public SkillBarElement SkillBar => GetObject<SkillBarElement>(IngameUIElementsStruct.SkillBar);
         public SkillBarElement HiddenSkillBar => GetObject<SkillBarElement>(IngameUIElementsStruct.HiddenSkillBar);
         public ChatElement ChatBoxRoot => GetObject<ChatElement>(IngameUIElementsStruct.ChatPanel);
@@ -60,7 +60,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public AtlasElement AtlasPanel => GetObject<AtlasElement>(IngameUIElementsStruct.AtlasPanel);
         public AtlasElement Atlas => AtlasPanel; // Required to fit with TehCheats Api, Random Feature uses this field.
         public Element AtlasSkillPanel => GetObject<Element>(IngameUIElementsStruct.AtlasSkillPanel);
-        public Map Map => _map ??= GetObject<Map>(IngameUIElementsStruct.Map);
+        public Map Map => _map = _map ?? GetObject<Map>(IngameUIElementsStruct.Map);
         public Element MapDeviceWindow => GetObject<Element>(IngameUIElementsStruct.MapDeviceWindow);
         public ItemsOnGroundLabelElement ItemsOnGroundLabelElement => GetObject<ItemsOnGroundLabelElement>(IngameUIElementsStruct.itemsOnGroundLabelRoot);
         public IList<LabelOnGround> ItemsOnGroundLabels => ItemsOnGroundLabelElement.LabelsOnGround;
@@ -70,15 +70,15 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public ItemOnGroundTooltip ItemOnGroundTooltip => GetObject<ItemOnGroundTooltip>(IngameUIElementsStruct.ItemOnGroundTooltip);
         public MapStashTabElement MapStashTab => ReadObject<MapStashTabElement>(IngameUIElementsStruct.MapTabWindowStartPtr);
         public Element Sulphit => GetObject<Element>(IngameUIElementsStruct.Map).GetChildAtIndex(3);
-        public Cursor Cursor => _cursor ??= GetObject<Cursor>(IngameUIElementsStruct.Mouse);
-        public Element BetrayalWindow => _BetrayalWindow ??= GetObject<Element>(IngameUIElementsStruct.BetrayalWindow);
+        public Cursor Cursor => _cursor = _cursor ?? GetObject<Cursor>(IngameUIElementsStruct.Mouse);
+        public Element BetrayalWindow => _BetrayalWindow = _BetrayalWindow ?? GetObject<Element>(IngameUIElementsStruct.BetrayalWindow);
         public Element SyndicatePanel => BetrayalWindow; // Required for TehCheats Api, BroodyHen uses this.
         public Element SyndicateTree => GetObject<Element>(M.Read<long>(BetrayalWindow.Address + 0xA50));
-        public Element UnveilWindow => _UnveilWindow ??= GetObject<Element>(IngameUIElementsStruct.UnveilWindow);
-        public Element ZanaMissionChoice => _ZanaMissionChoice ??= GetObject<Element>(IngameUIElementsStruct.ZanaMissionChoice);
-        public IncursionWindow IncursionWindow => _IncursionWindow ??= GetObject<IncursionWindow>(IngameUIElementsStruct.IncursionWindow);
-        public Element SynthesisWindow => _SynthesisWindow ??= GetObject<Element>(IngameUIElementsStruct.SynthesisWindow);
-        public Element CraftBench => _CraftBench ??= GetObject<Element>(IngameUIElementsStruct.CraftBenchWindow);
+        public Element UnveilWindow => _UnveilWindow = _UnveilWindow ?? GetObject<Element>(IngameUIElementsStruct.UnveilWindow);
+        public Element ZanaMissionChoice => _ZanaMissionChoice = _ZanaMissionChoice ?? GetObject<Element>(IngameUIElementsStruct.ZanaMissionChoice);
+        public IncursionWindow IncursionWindow => _IncursionWindow = _IncursionWindow ?? GetObject<IncursionWindow>(IngameUIElementsStruct.IncursionWindow);
+        public Element SynthesisWindow => _SynthesisWindow = _SynthesisWindow ?? GetObject<Element>(IngameUIElementsStruct.SynthesisWindow);
+        public Element CraftBench => _CraftBench = _CraftBench ?? GetObject<Element>(IngameUIElementsStruct.CraftBenchWindow);
         public bool IsDndEnabled => M.Read<byte>(Address + 0xf92) == 1;
         public string DndMessage => M.ReadStringU(M.Read<long>(Address + 0xf98));
         public WorldMapElement AreaInstanceUi => GetObject<WorldMapElement>(IngameUIElementsStruct.AreaInstanceUi);

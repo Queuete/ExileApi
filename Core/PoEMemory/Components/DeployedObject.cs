@@ -17,7 +17,7 @@ namespace ExileCore.PoEMemory.Components
         public ushort ObjectId => Struct.ObjectId;
         public ushort SkillKey => Struct.SkillId;
 
-        public Entity Entity => _entity ??= EntityListWrapper.GetEntityById(ObjectId);
+        public Entity Entity => _entity = _entity ?? EntityListWrapper.GetEntityById(ObjectId);
         //public ActorSkill Skill => ObjectManager.Instance.GameController.Player.GetComponent<Actor>().ActorSkills.Find(x => x.Id == ObjectKey);
     }
 }

@@ -10,7 +10,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         private float posX = -1;
         private float posY = -1;
         private string text;
-        public WorldArea Area => area ??= TheGame.Files.WorldAreas.GetByAddress(M.Read<long>(Address));
+        public WorldArea Area => area = area ?? TheGame.Files.WorldAreas.GetByAddress(M.Read<long>(Address));
         public Vector2 PosL0 => GetPosByLayer(0);
         public Vector2 PosL1 => GetPosByLayer(1);
         public Vector2 PosL2 => GetPosByLayer(2);
@@ -30,7 +30,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
             M.Read<int>(Address + 0xB1)
         };
 
-        public string FlavourText => text ??= M.ReadStringU(M.Read<long>(M.Read<long>(Address + 0x31) + 0x0C));
+        public string FlavourText => text = text ?? M.ReadStringU(M.Read<long>(M.Read<long>(Address + 0x31) + 0x0C));
 
         public AtlasRegion AtlasRegion => TheGame.Files.AtlasRegions.GetByAddress(M.Read<long>(Address + 0x41));
 

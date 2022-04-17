@@ -55,63 +55,63 @@ namespace ExileCore.PoEMemory
         public ItemClasses ItemClasses { get; }
 
         public BaseItemTypes BaseItemTypes =>
-            _BaseItemTypes ??= new BaseItemTypes(_Memory, () => FindFile("Data/BaseItemTypes.dat"));
+            _BaseItemTypes = _BaseItemTypes ?? new BaseItemTypes(_Memory, () => FindFile("Data/BaseItemTypes.dat"));
 
-        public ModsDat Mods => _Mods ??= new ModsDat(_Memory, () => FindFile("Data/Mods.dat"), Stats, Tags);
-        public StatsDat Stats => _Stats ??= new StatsDat(_Memory, () => FindFile("Data/Stats.dat"));
-        public TagsDat Tags => _Tags ??= new TagsDat(_Memory, () => FindFile("Data/Tags.dat"));
-        public WorldAreas WorldAreas => _WorldAreas ??= new WorldAreas(_Memory, () => FindFile("Data/WorldAreas.dat"));
+        public ModsDat Mods => _Mods = _Mods ?? new ModsDat(_Memory, () => FindFile("Data/Mods.dat"), Stats, Tags);
+        public StatsDat Stats => _Stats = _Stats ?? new StatsDat(_Memory, () => FindFile("Data/Stats.dat"));
+        public TagsDat Tags => _Tags = _Tags ?? new TagsDat(_Memory, () => FindFile("Data/Tags.dat"));
+        public WorldAreas WorldAreas => _WorldAreas = _WorldAreas ?? new WorldAreas(_Memory, () => FindFile("Data/WorldAreas.dat"));
 
         public PassiveSkills PassiveSkills =>
-            _PassiveSkills ??= new PassiveSkills(_Memory, () => FindFile("Data/PassiveSkills.dat"));
+            _PassiveSkills = _PassiveSkills ?? new PassiveSkills(_Memory, () => FindFile("Data/PassiveSkills.dat"));
 
         public LabyrinthTrials LabyrinthTrials =>
-            _LabyrinthTrials ??= new LabyrinthTrials(_Memory, () => FindFile("Data/LabyrinthTrials.dat"));
+            _LabyrinthTrials = _LabyrinthTrials ?? new LabyrinthTrials(_Memory, () => FindFile("Data/LabyrinthTrials.dat"));
 
-        public Quests Quests => _Quests ??= new Quests(_Memory, () => FindFile("Data/Quest.dat"));
+        public Quests Quests => _Quests = _Quests ?? new Quests(_Memory, () => FindFile("Data/Quest.dat"));
 
         public QuestStates QuestStates =>
-            _QuestStates ??= new QuestStates(_Memory, () => FindFile("Data/QuestStates.dat"));
+            _QuestStates = _QuestStates ?? new QuestStates(_Memory, () => FindFile("Data/QuestStates.dat"));
 
         public MonsterVarieties MonsterVarieties =>
-            _MonsterVarieties ??= new MonsterVarieties(_Memory, () => FindFile("Data/MonsterVarieties.dat"));
+            _MonsterVarieties = _MonsterVarieties ?? new MonsterVarieties(_Memory, () => FindFile("Data/MonsterVarieties.dat"));
 
         public PropheciesDat Prophecies =>
-            _Prophecies ??= new PropheciesDat(_Memory, () => FindFile("Data/Prophecies.dat"));
+            _Prophecies = _Prophecies ?? new PropheciesDat(_Memory, () => FindFile("Data/Prophecies.dat"));
 
         public UniversalFileWrapper<AtlasNode> AtlasNodes =>
-            _AtlasNodes ??= new AtlasNodes(_Memory, () => FindFile("Data/AtlasNode.dat"));
+            _AtlasNodes = _AtlasNodes ?? new AtlasNodes(_Memory, () => FindFile("Data/AtlasNode.dat"));
 
         #endregion Misc
 
         #region Betrayal
 
         public UniversalFileWrapper<BetrayalTarget> BetrayalTargets =>
-            _BetrayalTargets ??=
+            _BetrayalTargets = _BetrayalTargets ?? 
                 new UniversalFileWrapper<BetrayalTarget>(_Memory, () => FindFile("Data/BetrayalTargets.dat"));
 
         public UniversalFileWrapper<BetrayalJob> BetrayalJobs =>
-            _BetrayalJobs ??= new UniversalFileWrapper<BetrayalJob>(_Memory, () => FindFile("Data/BetrayalJobs.dat"));
+            _BetrayalJobs = _BetrayalJobs ?? new UniversalFileWrapper<BetrayalJob>(_Memory, () => FindFile("Data/BetrayalJobs.dat"));
 
         public UniversalFileWrapper<BetrayalRank> BetrayalRanks =>
-            _BetrayalRanks ??=
+            _BetrayalRanks = _BetrayalRanks ?? 
                 new UniversalFileWrapper<BetrayalRank>(_Memory, () => FindFile("Data/BetrayalRanks.dat"));
 
         public UniversalFileWrapper<BetrayalReward> BetrayalRewards =>
-            _BetrayalRewards ??=
+            _BetrayalRewards = _BetrayalRewards ?? 
                 new UniversalFileWrapper<BetrayalReward>(_Memory, () => FindFile("Data/BetrayalTraitorRewards.dat"));
 
         public UniversalFileWrapper<BetrayalChoice> BetrayalChoises =>
-            _BetrayalChoices ??=
+            _BetrayalChoices = _BetrayalChoices ?? 
                 new UniversalFileWrapper<BetrayalChoice>(_Memory, () => FindFile("Data/BetrayalChoices.dat"));
 
         public UniversalFileWrapper<BetrayalChoiceAction> BetrayalChoiceActions =>
-            _BetrayalChoiceActions ??=
+            _BetrayalChoiceActions = _BetrayalChoiceActions ?? 
                 new UniversalFileWrapper<BetrayalChoiceAction>(_Memory,
                     () => FindFile("Data/BetrayalChoiceActions.dat"));
 
         public UniversalFileWrapper<BetrayalDialogue> BetrayalDialogue =>
-            _BetrayalDialogue ??=
+            _BetrayalDialogue = _BetrayalDialogue ?? 
                 new UniversalFileWrapper<BetrayalDialogue>(_Memory, () => FindFile("Data/BetrayalDialogue.dat"));
 
         #endregion
@@ -119,13 +119,13 @@ namespace ExileCore.PoEMemory
         #region Heist
 
         public UniversalFileWrapper<HeistJobRecord> HeistJobs =>
-            _HeistJobs ??= new UniversalFileWrapper<HeistJobRecord>(_Memory, () => FindFile("Data/HeistJobs.dat"));
+            _HeistJobs = _HeistJobs ?? new UniversalFileWrapper<HeistJobRecord>(_Memory, () => FindFile("Data/HeistJobs.dat"));
 
         public UniversalFileWrapper<HeistChestRewardTypeRecord> HeistChestRewardType =>
-            _HeistChestRewardTypes ??=
+            _HeistChestRewardTypes = _HeistChestRewardTypes ?? 
                 new UniversalFileWrapper<HeistChestRewardTypeRecord>(_Memory,
                     () => FindFile("Data/HeistChestRewardTypes.dat"));
-        public UniversalFileWrapper<HeistNpcRecord> HeistNpcs => _HeistNpcs ??=
+        public UniversalFileWrapper<HeistNpcRecord> HeistNpcs => _HeistNpcs = _HeistNpcs ?? 
             new UniversalFileWrapper<HeistNpcRecord>(_Memory, () => FindFile("Data/HeistNPCs.dat"));
 
         #endregion
@@ -139,27 +139,27 @@ namespace ExileCore.PoEMemory
         private UniversalFileWrapper<MetamorphRewardTypeItemsClient> _MetamorphRewardTypeItemsClient;
 
         public UniversalFileWrapper<MetamorphMetaSkill> MetamorphMetaSkills =>
-            _MetamorphMetaSkills ??=
+            _MetamorphMetaSkills = _MetamorphMetaSkills ?? 
                 new UniversalFileWrapper<MetamorphMetaSkill>(_Memory,
                     () => FindFile("Data/MetamorphosisMetaSkills.dat"));
 
         public UniversalFileWrapper<MetamorphMetaSkillType> MetamorphMetaSkillTypes =>
-            _MetamorphMetaSkillTypes ??=
+            _MetamorphMetaSkillTypes = _MetamorphMetaSkillTypes ?? 
                 new UniversalFileWrapper<MetamorphMetaSkillType>(_Memory,
                     () => FindFile("Data/MetamorphosisMetaSkillTypes.dat"));
 
         public UniversalFileWrapper<MetamorphMetaMonster> MetamorphMetaMonsters =>
-            _MetamorphMetaMonsters ??=
+            _MetamorphMetaMonsters = _MetamorphMetaMonsters ?? 
                 new UniversalFileWrapper<MetamorphMetaMonster>(_Memory,
                     () => FindFile("Data/MetamorphosisMetaMonsters.dat"));
 
         public UniversalFileWrapper<MetamorphRewardType> MetamorphRewardTypes =>
-            _MetamorphRewardTypes ??=
+            _MetamorphRewardTypes = _MetamorphRewardTypes ?? 
                 new UniversalFileWrapper<MetamorphRewardType>(_Memory,
                     () => FindFile("Data/MetamorphosisRewardTypes.dat"));
 
         public UniversalFileWrapper<MetamorphRewardTypeItemsClient> MetamorphRewardTypeItemsClient =>
-            _MetamorphRewardTypeItemsClient ??=
+            _MetamorphRewardTypeItemsClient = _MetamorphRewardTypeItemsClient ?? 
                 new UniversalFileWrapper<MetamorphRewardTypeItemsClient>(_Memory,
                     () => FindFile("Data/MetamorphosisRewardTypeItemsClient.dat"));
 
@@ -170,38 +170,38 @@ namespace ExileCore.PoEMemory
         private BestiaryCapturableMonsters _BestiaryCapturableMonsters;
 
         public BestiaryCapturableMonsters BestiaryCapturableMonsters =>
-            _BestiaryCapturableMonsters ??=
+            _BestiaryCapturableMonsters = _BestiaryCapturableMonsters ?? 
                 new BestiaryCapturableMonsters(_Memory, () => FindFile("Data/BestiaryCapturableMonsters.dat"));
 
         private UniversalFileWrapper<BestiaryRecipe> _BestiaryRecipes;
 
         public UniversalFileWrapper<BestiaryRecipe> BestiaryRecipes =>
-            _BestiaryRecipes ??=
+            _BestiaryRecipes = _BestiaryRecipes ?? 
                 new UniversalFileWrapper<BestiaryRecipe>(_Memory, () => FindFile("Data/BestiaryRecipes.dat"));
 
         private UniversalFileWrapper<BestiaryRecipeComponent> _BestiaryRecipeComponents;
 
         public UniversalFileWrapper<BestiaryRecipeComponent> BestiaryRecipeComponents =>
-            _BestiaryRecipeComponents ??=
+            _BestiaryRecipeComponents = _BestiaryRecipeComponents ?? 
                 new UniversalFileWrapper<BestiaryRecipeComponent>(_Memory,
                     () => FindFile("Data/BestiaryRecipeComponent.dat"));
 
         private UniversalFileWrapper<BestiaryGroup> _BestiaryGroups;
 
         public UniversalFileWrapper<BestiaryGroup> BestiaryGroups =>
-            _BestiaryGroups ??=
+            _BestiaryGroups = _BestiaryGroups ?? 
                 new UniversalFileWrapper<BestiaryGroup>(_Memory, () => FindFile("Data/BestiaryGroups.dat"));
 
         private UniversalFileWrapper<BestiaryFamily> _BestiaryFamilies;
 
         public UniversalFileWrapper<BestiaryFamily> BestiaryFamilies =>
-            _BestiaryFamilies ??=
+            _BestiaryFamilies = _BestiaryFamilies ?? 
                 new UniversalFileWrapper<BestiaryFamily>(_Memory, () => FindFile("Data/BestiaryFamilies.dat"));
 
         private UniversalFileWrapper<BestiaryGenus> _BestiaryGenuses;
 
         public UniversalFileWrapper<BestiaryGenus> BestiaryGenuses =>
-            _BestiaryGenuses ??=
+            _BestiaryGenuses = _BestiaryGenuses ?? 
                 new UniversalFileWrapper<BestiaryGenus>(_Memory, () => FindFile("Data/BestiaryGenus.dat"));
 
         #endregion
@@ -211,7 +211,7 @@ namespace ExileCore.PoEMemory
         private AtlasRegions _AtlasRegions;
 
         public AtlasRegions AtlasRegions =>
-            _AtlasRegions ??= new AtlasRegions(_Memory, () => FindFile("Data/AtlasRegions.dat"));
+            _AtlasRegions = _AtlasRegions ?? new AtlasRegions(_Memory, () => FindFile("Data/AtlasRegions.dat"));
 
         #endregion
 

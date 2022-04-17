@@ -45,13 +45,17 @@ namespace ExileCore.PoEMemory.MemoryObjects
                         : Id.ToString(CultureInfo.InvariantCulture);
                 }
 
-                return id switch
+                switch (id)
                 {
-                    0x266 => "Interaction",
-                    0x2909 => "Move",
-                    0x37d9 => "WashedUp",
-                    _ => InternalName
-                };
+                  case 0x266:
+                    return "Interaction";
+                  case 0x2909:
+                    return "Move";
+                  case 0x37d9:
+                    return "WashedUp";
+                  default:
+                    return InternalName;
+                }
             }
         }
 
@@ -141,13 +145,17 @@ namespace ExileCore.PoEMemory.MemoryObjects
                 if (effects != null)
                     return effects.SkillGemWrapper.ActiveSkill.InternalName;
 
-                return Id switch
+                switch (Id)
                 {
-                    0x266 => "Interaction",
-                    0x2909 => "Move",
-                    0x3D79 => "WashedUp",
-                    _ => Id.ToString(CultureInfo.InvariantCulture)
-                };
+                  case 0x266:
+                    return "Interaction";
+                  case 0x2909:
+                    return "Move";
+                  case 0x3D79:
+                    return "WashedUp";
+                  default:
+                    return Id.ToString(CultureInfo.InvariantCulture);
+                }
             }
         }
 

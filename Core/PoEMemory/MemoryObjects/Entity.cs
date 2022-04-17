@@ -389,7 +389,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
         public bool Check(uint entityId)
         {
-            if (_id != null && _id != entityId)
+          if (_id != null && _id != entityId)
             {
                 DebugWindow.LogMsg($"Was ID: {Id} New ID: {entityId} To Path: {Path}", 3);
                 _id = entityId;
@@ -398,13 +398,16 @@ namespace ExileCore.PoEMemory.MemoryObjects
                 Type = ParseType();
             }
 
-            return Type switch
-            {
-                EntityType.Error => false,
-                EntityType.Effect => true,
-                EntityType.Daemon => true,
-                _ => CacheComp != null && Id == entityId && CheckRarity()
-            };
+          switch (Type)
+          {
+            case EntityType.Error:
+              return false;
+            case EntityType.Effect:
+            case EntityType.Daemon:
+              return true;
+            default:
+              return CacheComp != null && Id == entityId && CheckRarity();
+          }
         }
 
         private bool CheckRarity()

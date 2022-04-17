@@ -10,17 +10,17 @@ namespace ExileCore.PoEMemory.MemoryObjects
         private string _MonsterName;
         private MonsterVariety _MonsterVariety;
         public int Id { get; set; }
-        public string MonsterName => _MonsterName ??= M.ReadStringU(M.Read<long>(Address + 0x20));
+        public string MonsterName => _MonsterName = _MonsterName ?? M.ReadStringU(M.Read<long>(Address + 0x20));
         public MonsterVariety MonsterVariety =>
-            _MonsterVariety ??= TheGame.Files.MonsterVarieties.GetByAddress(M.Read<long>(Address + 0x0));
+            _MonsterVariety = _MonsterVariety ?? TheGame.Files.MonsterVarieties.GetByAddress(M.Read<long>(Address + 0x0));
         public BestiaryGroup BestiaryGroup =>
-            _BestiaryGroup ??= TheGame.Files.BestiaryGroups.GetByAddress(M.Read<long>(Address + 0x10));
+            _BestiaryGroup = _BestiaryGroup ?? TheGame.Files.BestiaryGroups.GetByAddress(M.Read<long>(Address + 0x10));
         public long BestiaryEncountersPtr => M.Read<long>(Address + 0x30);
         [Obsolete("[3.16] Doesn't seem to be here anymore")]
         public BestiaryCapturableMonster BestiaryCapturableMonsterKey =>
-            _BestiaryCapturableMonsterKey ??= TheGame.Files.BestiaryCapturableMonsters.GetByAddress(M.Read<long>(Address + 0x6a));
+            _BestiaryCapturableMonsterKey = _BestiaryCapturableMonsterKey ?? TheGame.Files.BestiaryCapturableMonsters.GetByAddress(M.Read<long>(Address + 0x6a));
         public BestiaryGenus BestiaryGenus =>
-            _BestiaryGenus ??= TheGame.Files.BestiaryGenuses.GetByAddress(M.Read<long>(Address + 0x59));
+            _BestiaryGenus = _BestiaryGenus ?? TheGame.Files.BestiaryGenuses.GetByAddress(M.Read<long>(Address + 0x59));
         public int AmountCaptured => TheGame.IngameState.Data.ServerData.GetBeastCapturedAmount(this);
 
         public override string ToString()

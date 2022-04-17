@@ -23,7 +23,7 @@ namespace ExileCore.PoEMemory.Components
         private BaseComponentOffsets ComponentStruct => _CachedComponent.Value;
         private BaseInfoOffsets InfoStruct => _CachedInfo.Value;
 
-        public string Name => _Name ??= M.ReadStringU(InfoStruct.NameKey);
+        public string Name => _Name = _Name ?? M.ReadStringU(InfoStruct.NameKey);
         public byte ItemCellsSizeX => InfoStruct.ItemCellSizeX;
         public byte ItemCellsSizeY => InfoStruct.ItemCellSizeY;
         private Influence InfluenceFlag => (Influence)ComponentStruct.InfluenceFlag;

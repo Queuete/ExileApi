@@ -55,7 +55,7 @@ namespace ExileCore
 
                 if (property.Name == "Enable" && menuAttribute == null) continue;
 
-                menuAttribute ??= new MenuAttribute(Regex.Replace(property.Name, "(\\B[A-Z])", " $1"));
+                menuAttribute = menuAttribute ?? new MenuAttribute(Regex.Replace(property.Name, "(\\B[A-Z])", " $1"));
 
                 var holder = new SettingsHolder
                 {

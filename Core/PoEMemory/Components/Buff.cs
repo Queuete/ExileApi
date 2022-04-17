@@ -30,7 +30,7 @@ namespace ExileCore.PoEMemory.Components
                 });
         }
 
-        public BuffOffsets BuffOffsets => (BuffOffsets)(_offsets ??= M.Read<BuffOffsets>(Address));
+        public BuffOffsets BuffOffsets => (BuffOffsets)(_offsets = _offsets ?? M.Read<BuffOffsets>(Address));
         public string Name => _name.Value;
         public byte Charges => BuffOffsets.Charges;
 

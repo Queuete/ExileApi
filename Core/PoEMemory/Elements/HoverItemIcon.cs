@@ -31,22 +31,23 @@ namespace ExileCore.PoEMemory.Elements
         public int InventPosX => M.Read<int>(Address + InventPosXOffset);
         public int InventPosY => M.Read<int>(Address + InventPosYOffset);
 
-        public ToolTipType ToolTipType
-        {
-            get { return _ToolTip ??= GetToolTipType(); }
-        }
+        public ToolTipType ToolTipType => (_ToolTip = _ToolTip ?? GetToolTipType()).Value;
 
         public new Element Tooltip
         {
             get
             {
-                return ToolTipType switch
-                {
-                    ToolTipType.ItemOnGround => ToolTipOnGround.Tooltip,
-                    ToolTipType.InventoryItem => InventoryItemTooltip,
-                    ToolTipType.ItemInChat => ItemInChatTooltip.Children[0].Children[1],
-                    _ => null
-                };
+              switch (ToolTipType)
+              {
+                case ToolTipType.ItemOnGround:
+                  return ToolTipOnGround.Tooltip;
+                case ToolTipType.InventoryItem:
+                  return InventoryItemTooltip;
+                case ToolTipType.ItemInChat:
+                  return ItemInChatTooltip.Children[0].Children[1];
+                default:
+                  return null;
+              }
             }
         }
 
@@ -54,12 +55,15 @@ namespace ExileCore.PoEMemory.Elements
         {
             get
             {
-                return ToolTipType switch
-                {
-                    ToolTipType.ItemOnGround => ToolTipOnGround.ItemFrame,
-                    ToolTipType.ItemInChat => ItemInChatTooltip.Children[0].Children[0],
-                    _ => null
-                };
+              switch (ToolTipType)
+              {
+                case ToolTipType.ItemOnGround:
+                  return ToolTipOnGround.ItemFrame;
+                case ToolTipType.ItemInChat:
+                  return ItemInChatTooltip.Children[0].Children[0];
+                default:
+                  return null;
+              }
             }
         }
 

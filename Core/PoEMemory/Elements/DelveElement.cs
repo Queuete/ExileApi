@@ -59,7 +59,7 @@ namespace ExileCore.PoEMemory.Elements
         public string Mods => mods.ToString(M);
         //private NativeStringU mines => M.Read<NativeStringU>(M.Read<long>(Address + 0x150) + 0x38);
         //public string MinesText => mines.ToString(M);
-        public DelveCellInfoStrings Info => info ??= ReadObjectAt<DelveCellInfoStrings>(0x6C0);
+        public DelveCellInfoStrings Info => info = info ?? ReadObjectAt<DelveCellInfoStrings>(0x6C0);
         public override string Text => $"{Info.TestString} [{Info.TestString5}]";
         public bool HasEncounter => M.Read<bool>(Address + 0x45B);
         public bool IsCellVisible => M.Read<bool>(Address + 0x45C);
@@ -85,11 +85,11 @@ namespace ExileCore.PoEMemory.Elements
         private string _testString4;
         private string _testString5;
         private string _testStringGood;
-        public string TestString => _testString ??= M.ReadStringU(M.Read<long>(Address));
-        public string TestStringGood => _testStringGood ??= _testString.InsertBeforeUpperCase(Environment.NewLine);
-        public string TestString2 => _testString2 ??= M.ReadStringU(M.Read<long>(Address + 0x8));
-        public string TestString3 => _testString3 ??= M.ReadStringU(M.Read<long>(Address + 0x30));
-        public string TestString4 => _testString4 ??= M.ReadStringU(M.Read<long>(Address + 0x60));
+        public string TestString => _testString = _testString ?? M.ReadStringU(M.Read<long>(Address));
+        public string TestStringGood => _testStringGood = _testStringGood ?? _testString.InsertBeforeUpperCase(Environment.NewLine);
+        public string TestString2 => _testString2 = _testString2 ?? M.ReadStringU(M.Read<long>(Address + 0x8));
+        public string TestString3 => _testString3 = _testString3 ?? M.ReadStringU(M.Read<long>(Address + 0x30));
+        public string TestString4 => _testString4 = _testString4 ?? M.ReadStringU(M.Read<long>(Address + 0x60));
 
         public string TestString5
         {
