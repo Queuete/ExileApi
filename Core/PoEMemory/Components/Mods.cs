@@ -83,7 +83,7 @@ namespace ExileCore.PoEMemory.Components
 
         public bool IsSplit => Address != 0 && _data.IsSplit == 1;
 
-        public bool IsSynthesized => ItemMods != null && ItemMods.Any(x => x.RawName.StartsWith("SynthesisImplicit"));
+        public bool IsSynthesized => Address != 0 && _data.IsSynthesised == 1;
 
         public bool IsTalisman => ItemMods != null && ItemMods.Any(x => x.RawName.StartsWith("Talisman"));
 

@@ -50,14 +50,15 @@ namespace GameOffsets
         [FieldOffset(0x0D0)] public readonly NativePtrArray ExplicitModsArray;
         [FieldOffset(0x0E8)] public readonly NativePtrArray EnchantedModsArray;
         [FieldOffset(0x100)] public readonly NativePtrArray ScourgeModsArray;
-        [FieldOffset(0x1D8)] public readonly long ModsComponentDetailsKey;
+        [FieldOffset(0x1F0)] public readonly long ModsComponentDetailsKey;
         [FieldOffset(0x220)] public readonly int ItemLevel;
         [FieldOffset(0x224)] public readonly int RequiredLevel;
         [FieldOffset(0x228)] public readonly long IncubatorKey;
         [FieldOffset(0x238)] public readonly short IncubatorKillCount;
-        [FieldOffset(0x225)] public readonly byte IsMirrored;
-        [FieldOffset(0x226)] public readonly byte IsSplit;
-        [FieldOffset(0x227)] public readonly byte IsUsable;
+        [FieldOffset(0x23D)] public readonly byte IsMirrored;
+        [FieldOffset(0x23E)] public readonly byte IsSplit;
+        [FieldOffset(0x23F)] public readonly byte IsUsable;
+        [FieldOffset(0x241)] public readonly byte IsSynthesised;
 
         public const int ItemModRecordSize = 0x38;
         public const int NameOffset = 0x04;
@@ -73,21 +74,22 @@ namespace GameOffsets
         //[FieldOffset(0x0E8)] public readonly NativePtrArray EnchantedModsArray;
         //[FieldOffset(0x100)] public readonly NativePtrArray ScourgeModsArray;
         //[FieldOffset(0x160)] public readonly NativePtrArray StatValuesArray;
-        //[FieldOffset(0x1C0)] public readonly long AlternateQualityTypeKey;
-        //[FieldOffset(0x1C8)] public readonly long AlternateQualityTypeFileKey;
-        //[FieldOffset(0x1D0)] public readonly int AlternateQualityAmount;
-        //[FieldOffset(0x1D8)] public readonly long ModsDetailsKey;
-        //[FieldOffset(0x1E0)] public readonly long StatDescriptionsFile1;
-        //[FieldOffset(0x1E8)] public readonly long StatDescriptionsFile2;
-        //[FieldOffset(0x1F0)] public readonly NativePtrArray Tags;
-        //[FieldOffset(0x208)] public readonly int ItemLevel;
-        //[FieldOffset(0x20C)] public readonly int RequiredLevel;
-        //[FieldOffset(0x210)] public readonly long IncubatorKey;
-        //[FieldOffset(0x218)] public readonly long IncubatorFile;
-        //[FieldOffset(0x220)] public readonly short IncubatorKillCount;
-        //[FieldOffset(ox222)] public readonly short IncubatorItemLevel;
-        //[FieldOffset(0x225)] public readonly byte IsMirrored;
-        //[FieldOffset(0x226)] public readonly byte IsSplit;
-        //[FieldOffset(0x227)] public readonly byte IsUsable;
+        //[FieldOffset(0x1D8)] public readonly long AlternateQualityTypeKey;
+        //[FieldOffset(0x1E0)] public readonly long AlternateQualityTypeFileKey;
+        //[FieldOffset(0x1E8)] public readonly int AlternateQualityAmount;
+        //[FieldOffset(0x1F0)] public readonly long ModsDetailsKey;
+        //[FieldOffset(0x1F8)] public readonly long StatDescriptionsFile1;
+        //[FieldOffset(0x200)] public readonly long StatDescriptionsFile2;
+        //[FieldOffset(0x208)] public readonly NativePtrArray Tags;
+        //[FieldOffset(0x220)] public readonly int ItemLevel;
+        //[FieldOffset(0x224)] public readonly int RequiredLevel;
+        //[FieldOffset(0x228)] public readonly long IncubatorKey;
+        //[FieldOffset(0x230)] public readonly long IncubatorFile;
+        //[FieldOffset(0x238)] public readonly short IncubatorKillCount;
+        //[FieldOffset(ox23A)] public readonly short IncubatorItemLevel;
+        //[FieldOffset(0x23D)] public readonly byte IsMirrored;
+        //[FieldOffset(0x23E)] public readonly byte IsSplit;
+        //[FieldOffset(0x23F)] public readonly byte IsUsable;
+        //[FieldOffset(0x241)] public readonly byte IsSynthesised;
     }
 }
