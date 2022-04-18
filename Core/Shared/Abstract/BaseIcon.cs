@@ -70,7 +70,6 @@ namespace ExileCore.Shared.Abstract
             if (_settings == null || Entity == null)
             {
                 return;
-                throw new NullReferenceException("Settings or Entity is null.");
             }
 
             Rarity = Entity.Rarity;
