@@ -15,6 +15,7 @@ namespace ExileCore.Shared.Enums
         Ritual,
         Ultimatum,
         Expedition,
-        Scourge
+        Scourge,
+        Archnemesis
     }
 }
