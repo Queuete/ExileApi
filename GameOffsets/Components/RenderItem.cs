@@ -7,6 +7,6 @@ namespace GameOffsets.Components
     public struct RenderItem
     {
         [FieldOffset(0x0000)] public ComponentHeader Header;
-        [FieldOffset(0x0020)] public NativeUnicodeText ResourcePath;
+        [FieldOffset(0x0028)] public NativeUnicodeText ResourcePath;
     }
 }
