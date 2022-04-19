@@ -103,11 +103,10 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public int SpentAscendencyPoints => PlayerInformation.SpentAscendencyPoints;
         public PartyAllocation PartyAllocationType => (PartyAllocation) ServerDataStruct.PartyAllocationType;
         public string League => ServerDataStruct.League.ToString(M);
-        public PartyStatus PartyStatusType => (PartyStatus) this.ServerDataStruct.PartyStatusType;
+        public PartyStatus PartyStatusType => (PartyStatus) ServerDataStruct.PartyStatusType;
         public bool IsInGame => NetworkState == NetworkStateE.Connected;
-        public NetworkStateE NetworkState => (NetworkStateE) this.ServerDataStruct.NetworkState;
-        [Obsolete("Latency removed in 3.17.", false)]
-        public int Latency => 30;
+        public NetworkStateE NetworkState => (NetworkStateE) ServerDataStruct.NetworkState;
+        public int Latency => ServerDataStruct.Latency;
         public string Guild => NativeStringReader.ReadString(ServerDataStruct.GuildNameAddress, M);
         public BetrayalData BetrayalData => GetObject<BetrayalData>(M.Read<long>(Address + 0x3C8, 0x718)); // TODO: 3.12.2
 

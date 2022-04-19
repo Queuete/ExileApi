@@ -68,6 +68,7 @@ namespace GameOffsets
         [FieldOffset(0x89B8 - Skip)] public readonly byte NetworkState;
         [FieldOffset(0x89D0 - Skip)] public readonly NativeStringU League;
         [FieldOffset(0x8A50 - Skip)] public readonly int TimeInGame;
+        [FieldOffset(0x8A70 - Skip)] public readonly int Latency;
         [FieldOffset(0x8A78 - Skip)] public readonly NativePtrArray PlayerStashTabs;
         [FieldOffset(0x8A90 - Skip)] public readonly NativePtrArray GuildStashTabs;
         [FieldOffset(0x8C48 - Skip)] public readonly byte PartyStatusType;
@@ -109,7 +110,7 @@ namespace GameOffsets
         // [FieldOffset(0x89B8 - Skip)] public readonly byte NetworkState;
         // [FieldOffset(0x89D0 - Skip)] public readonly NativeStringU League;
         // [FieldOffset(0x8A50 - Skip)] public readonly int TimeInGame;
-        // [FieldOffset(0x8A68 - Skip)] public readonly int Latency;
+        // [FieldOffset(0x8A70 - Skip)] public readonly int Latency;
         // [FieldOffset(0x8A78 - Skip)] public readonly NativePtrArray PlayerStashTabs;
         // [FieldOffset(0x8A90 - Skip)] public readonly NativePtrArray GuildStashTabs;
         // [FieldOffset(0x8B60 - Skip)] public readonly long FriendsListMap;
