@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using ExileCore.PoEMemory.Components;
 using ExileCore.PoEMemory.FilesInMemory.Atlas;
 using ExileCore.Shared.Cache;
@@ -107,7 +106,8 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public PartyStatus PartyStatusType => (PartyStatus) this.ServerDataStruct.PartyStatusType;
         public bool IsInGame => NetworkState == NetworkStateE.Connected;
         public NetworkStateE NetworkState => (NetworkStateE) this.ServerDataStruct.NetworkState;
-        public int Latency => ServerDataStruct.Latency;
+        [Obsolete("Latency removed in 3.17.", false)]
+        public int Latency => 30;
         public string Guild => NativeStringReader.ReadString(ServerDataStruct.GuildNameAddress, M);
         public BetrayalData BetrayalData => GetObject<BetrayalData>(M.Read<long>(Address + 0x3C8, 0x718)); // TODO: 3.12.2
 
@@ -267,13 +267,23 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
         #region Atlas
 
+        public byte SocketedWatchstones => ServerDataStruct.SocketedWatchstones;
         public List<WorldArea> CompletedAreas => GetAreas(ServerDataStruct.CompletedMapsList).ToList();
         public List<WorldArea> BonusCompletedAreas => GetAreas(ServerDataStruct.BonusCompletedAreasList).ToList();
-        public List<WorldArea> AwakenedCompletedAreas => GetAreas(ServerDataStruct.AwakenedAreasList).ToList();
         public List<WorldArea> MavenCompletedAreas => GetAreas(ServerDataStruct.MavenMapsList).ToList();
-        public Dictionary<AtlasRegionE, WorldArea> WatchtowerMaps => GetWatchtowerMaps(Address + ServerDataOffsets.AtlasWatchtowerLocations);
+
+        #region Features removed from 3.17 patch
+
+        [Obsolete("Awakened tracking was removed with the 3.17 Atlas rework.", false)]
+        public List<WorldArea> AwakenedCompletedAreas => new List<WorldArea>();
+        [Obsolete("Watchtower map tracking was removed with the 3.17 Atlas rework.", false)]
+        public Dictionary<AtlasRegionE, WorldArea> WatchtowerMaps => new Dictionary<AtlasRegionE, WorldArea>();
+
+        #endregion
+
 
         #region Features removed from 3.9 patch
+        
         [ObsoleteAttribute("Shaped maps were removed with the 3.9.0 Atlas Rework. You should not be using this.", false)]
         public IList<WorldArea> ShapedMaps => new List<WorldArea>();
         [ObsoleteAttribute("Elder Guardian Areas were removed with the 3.9.0 Atlas Rework. You should not be using this.", false)]
@@ -282,6 +292,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public IList<WorldArea> MasterAreas => new List<WorldArea>();
         [ObsoleteAttribute("Elder Influenced Areas were removed with the 3.9.0 Atlas Rework. You should not be using this.", false)]
         public IList<WorldArea> ShaperElderAreas => new List<WorldArea>();
+        
         #endregion
 
         private IList<WorldArea> GetAreas(long listAddress)
@@ -295,9 +306,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
             if (lastAddress == 0) return worldAreas;
 
-            var currentAddress = lastAddress; 
-
-            if (currentAddress == 0) return worldAreas;
+            var currentAddress = lastAddress;
 
             for (var nextAddress = M.Read<long>(currentAddress);
                 nextAddress != lastAddress && nextAddress != 0;
@@ -315,32 +324,16 @@ namespace ExileCore.PoEMemory.MemoryObjects
             return worldAreas;
         }
 
-        private Dictionary<AtlasRegionE, WorldArea> GetWatchtowerMaps(long first)
-        {
-            var maps = new Dictionary<AtlasRegionE, WorldArea>();
-            if (first == 0)
-            {
-                return maps;
-            }
-
-            //first += 0x00; // Array is 8x16 bytes => 8 byte address (Map Info) + 8 byte address (Atlas File)
-            for (int i = 0; i < 4; ++i, first += 0x10)
-            {
-                var map = ReadObject<WorldArea>(first);
-                maps[(AtlasRegionE) i] = map ?? new WorldArea();
-            }
-
-            return maps;
-        }
-
+        [Obsolete("Regions were removed with the 3.17 Atlas rework.", false)]
         public byte GetAtlasRegionUpgradesByRegion(int regionId)
         {
-            return M.Read<byte>(Address + ServerDataOffsets.AtlasRegionUpgrades + regionId);
+            return SocketedWatchstones;
         }
 
+        [Obsolete("Regions were removed with the 3.17 Atlas rework.", false)]
         public byte GetAtlasRegionUpgradesByRegion(AtlasRegion region)
         {
-            return M.Read<byte>(Address + ServerDataOffsets.AtlasRegionUpgrades + region.Index);
+            return SocketedWatchstones;
         }
 
         #endregion
