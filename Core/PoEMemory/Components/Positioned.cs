@@ -20,7 +20,7 @@ namespace ExileCore.PoEMemory.Components
         public int GridY => PositionedStruct.GridY;
         public Vector2 GridPos => new Vector2(GridX, GridY);
         public Vector2i GridPosI => new Vector2i(GridX, GridY);
-        public Vector2 WorldPos => PositionedStruct.WorldPosition;
+        public Vector2 WorldPos => new Vector2(WorldX, WorldY);
         public float Rotation => PositionedStruct.Rotation;
         public float WorldX => PositionedStruct.WorldX;
         public float WorldY => PositionedStruct.WorldY;
