@@ -8,19 +8,20 @@ namespace GameOffsets
     {
         [FieldOffset(0x8)] public long Owner;
 
-        [FieldOffset(0x1B0)] public float ManaRegen;
-        [FieldOffset(0x1B4)] public int MaxMana;
-        [FieldOffset(0x1B8)] public int CurMana;
-        [FieldOffset(0x1C0)] public int ReservedPercentMana;
+        [FieldOffset(0x198)] public float ManaRegen;
+        [FieldOffset(0x19C)] public int MaxMana;
+        [FieldOffset(0x1A0)] public int CurMana;
+        [FieldOffset(0x1A4)] public int ReservedFlatMana;
+        [FieldOffset(0x1A8)] public int ReservedPercentMana;
 
-        [FieldOffset(0x1EC)] public int MaxES;
-        [FieldOffset(0x1F0)] public int CurES;
+        [FieldOffset(0x1D4)] public int MaxES;
+        [FieldOffset(0x1D8)] public int CurES;
         
-        [FieldOffset(0x248)] public float Regen;
-        [FieldOffset(0x24C)] public int MaxHP;
-        [FieldOffset(0x250)] public int CurHP;
-        [FieldOffset(0x254)] public int ReservedFlatHP;
-        [FieldOffset(0x258)] public int ReservedPercentHP;
+        [FieldOffset(0x230)] public float Regen;
+        [FieldOffset(0x234)] public int MaxHP;
+        [FieldOffset(0x238)] public int CurHP;
+        [FieldOffset(0x23C)] public int ReservedFlatHP;
+        [FieldOffset(0x240)] public int ReservedPercentHP;
 
     }
 }
