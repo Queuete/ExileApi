@@ -11,7 +11,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
     public class ServerInventory : RemoteMemoryObject
     {
         private readonly CachedValue<ServerInventoryOffsets> cachedValue;
-        private readonly int hashReadLimit = 500;
+        private readonly int hashReadLimit = 1500;
         public ServerInventory()
         {
             cachedValue = new FrameCache<ServerInventoryOffsets>(() => M.Read<ServerInventoryOffsets>(Address));
@@ -28,7 +28,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public int ServerRequestCounter => Struct.ServerRequestCounter;
         public IList<InventSlotItem> InventorySlotItems => ReadHashMap(Struct.InventorySlotItemsPtr, hashReadLimit).Values.ToList();
         public long Hash => Struct.Hash;
-        public IList<Entity> Items => ReadHashMap(Struct.InventorySlotItemsPtr, hashReadLimit).Values.Select(x => x.Item).ToList();
+        public IList<Entity> Items => InventorySlotItems.Select(x => x.Item).ToList();
 
         public InventSlotItem this[int x, int y]
         {
@@ -73,7 +73,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
                 if (limitMax-- < 0)
                 {
-                    DebugWindow.LogError("Fixed possible memory leak (ServerInventory.ReadHashMap)");
+                    DebugWindow.LogError($"Fixed possible memory leak (ServerInventory.ReadHashMap @ {Address:X})");
                     break;
                 }
             }
