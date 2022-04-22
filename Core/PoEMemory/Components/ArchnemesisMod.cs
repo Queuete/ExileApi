@@ -1,6 +1,6 @@
 ﻿namespace ExileCore.PoEMemory.Components
 {
-  public class ArchnemesisMod : Component
-  {
-  }
+    public class ArchnemesisMod : Component
+    {
+    }
 }

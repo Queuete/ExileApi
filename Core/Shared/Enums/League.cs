@@ -16,6 +16,7 @@ namespace ExileCore.Shared.Enums
         Ultimatum,
         Expedition,
         Scourge,
-        Archnemesis
+        Archnemesis,
+        Sentinel
     }
 }
