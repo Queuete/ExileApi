@@ -10,7 +10,7 @@ namespace GameOffsets
         [FieldOffset(0x018)] public long Data;
         [FieldOffset(0x078)] public long WorldData;
         [FieldOffset(0x098)] public long EntityLabelMap;
-        [FieldOffset(0x1A0)] public long UIRoot; //3.16.3
+        [FieldOffset(0x1A0)] public long UIRoot;
         [FieldOffset(0x1D8)] public long UIHover; // element which is currently hovered
         [FieldOffset(0x1E0)] public Vector2 UIHoverPos; // top left corner of currently hovered UI element
         [FieldOffset(0x1E8)] public long UIHoverTooltip;
