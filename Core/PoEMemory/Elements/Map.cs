@@ -4,9 +4,9 @@ namespace ExileCore.PoEMemory.Elements
 {
     public class SubMap : Element
     {
-        public Vector2 Shift => M.Read<Vector2>(Address + 0x2E8);
-        public Vector2 DefaultShift => M.Read<Vector2>(Address + 0x2F0);
-        public float Zoom => M.Read<float>(Address + 0x32C);
+        public Vector2 Shift => M.Read<Vector2>(Address + 0x270);
+        public Vector2 DefaultShift => M.Read<Vector2>(Address + 0x278);
+        public float Zoom => M.Read<float>(Address + 0x2B0);
     }
 
     public class Map : Element
