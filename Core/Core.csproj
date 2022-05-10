@@ -28,8 +28,8 @@
     <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
     <PackageReference Include="LibGit2Sharp.NativeBinaries" Version="2.0.306" />
     <PackageReference Include="LinqFaster" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Build" Version="15.1.0" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.1.0" />
+    <PackageReference Include="Microsoft.Build" Version="15.1.548" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="15.1.548" />
     <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Setup.Configuration.Interop" Version="1.16.30">
       <PrivateAssets>all</PrivateAssets>
