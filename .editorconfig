@@ -1,9 +1,799 @@
-# top-most EditorConfig file
 root = true
+# top-most EditorConfig file
 
 # Standard properties
 [*]
 end_of_line = lf
 insert_final_newline = true
+indent_size = 4
+indent_style = space
+
+[*.csproj]
 indent_size = 2
 indent_style = space
+
+[*.{cs,csx,vb,vbx}]
+charset = utf-8-bom
+end_of_line = lf
+indent_style = space
+indent_size = 4
+max_line_length = 130
+tab_width = 4
+
+[*.{cs,vb}]
+resharper_csharp_indent_size = 4
+resharper_csharp_tab_width = 4
+
+###########################
+# Naming Conventions      #
+###########################
+
+# Local Constants should be PascalCase
+dotnet_naming_rule.local_constants_should_be_pascal_case.severity = error
+dotnet_naming_rule.local_constants_should_be_pascal_case.style = local_constants_style
+dotnet_naming_rule.local_constants_should_be_pascal_case.symbols = local_constants_symbols
+
+dotnet_naming_style.local_constants_style.capitalization = pascal_case
+
+dotnet_naming_symbols.local_constants_symbols.applicable_accessibilities = public, protected_internal, protected, internal, private_protected, private, local
+dotnet_naming_symbols.local_constants_symbols.applicable_kinds = local
+dotnet_naming_symbols.local_constants_symbols.required_modifiers = const
+
+# Field Constants are PascalCase
+dotnet_naming_rule.field_constants_should_be_pascal_case.severity = error
+dotnet_naming_rule.field_constants_should_be_pascal_case.style = field_constants_style
+dotnet_naming_rule.field_constants_should_be_pascal_case.symbols = field_constants_symbols
+
+dotnet_naming_style.field_constants_style.capitalization = pascal_case
+
+dotnet_naming_symbols.field_constants_symbols.applicable_accessibilities = public, protected_internal, protected, internal, private_protected, private, local
+dotnet_naming_symbols.field_constants_symbols.applicable_kinds = field
+dotnet_naming_symbols.field_constants_symbols.required_modifiers = const
+
+# Locals and Parameters are camelCase
+dotnet_naming_rule.locals_and_parameters_should_be_camel_case.severity = error
+dotnet_naming_rule.locals_and_parameters_should_be_camel_case.style = locals_and_parameters_style
+dotnet_naming_rule.locals_and_parameters_should_be_camel_case.symbols = locals_and_parameters_symbols
+
+dotnet_naming_style.locals_and_parameters_style.capitalization = camel_case
+
+dotnet_naming_symbols.locals_and_parameters_symbols.applicable_kinds = parameter,local
+
+# Local Functions should be PascalCase
+dotnet_naming_rule.local_functions_should_be_pascal_case.severity = error
+dotnet_naming_rule.local_functions_should_be_pascal_case.style = local_functions_style
+dotnet_naming_rule.local_functions_should_be_pascal_case.symbols = local_functions_symbols
+
+dotnet_naming_style.local_functions_style.capitalization = pascal_case
+
+dotnet_naming_symbols.local_functions_symbols.applicable_kinds = local_function
+
+# Non Public/Protected Fields and Properties should be camelCase
+dotnet_naming_rule.non_public_protected_fields_and_properties_should_be_camel_case.severity = error
+dotnet_naming_rule.non_public_protected_fields_and_properties_should_be_camel_case.style = non_public_protected_fields_and_properties_style
+dotnet_naming_rule.non_public_protected_fields_and_properties_should_be_camel_case.symbols = non_public_protected_fields_and_properties_symbols
+
+dotnet_naming_style.non_public_protected_fields_and_properties_style.capitalization = camel_case
+dotnet_naming_style.non_public_protected_fields_and_properties_style.required_prefix = _
+
+dotnet_naming_symbols.non_public_protected_fields_and_properties_symbols.applicable_accessibilities = protected_internal, internal, private_protected, private
+dotnet_naming_symbols.non_public_protected_fields_and_properties_symbols.applicable_kinds = field,property
+
+# Non Public/Protected Static Fields should be camelCase and start with s_
+dotnet_naming_rule.non_public_protected_static_fields_should_be_camel_case.severity = error
+dotnet_naming_rule.non_public_protected_static_fields_should_be_camel_case.style = non_public_protected_static_fields_style
+dotnet_naming_rule.non_public_protected_static_fields_should_be_camel_case.symbols = non_public_protected_static_fields_symbols
+
+dotnet_naming_style.non_public_protected_static_fields_style.capitalization = camel_case
+dotnet_naming_style.non_public_protected_static_fields_style.required_prefix = s_
+
+dotnet_naming_symbols.non_public_protected_static_fields_symbols.applicable_accessibilities = protected_internal, internal, private_protected, private
+dotnet_naming_symbols.non_public_protected_static_fields_symbols.applicable_kinds = field
+dotnet_naming_symbols.non_public_protected_static_fields_symbols.required_modifiers = static
+
+# Readonly Fields should be PascalCase
+dotnet_naming_rule.readonly_fields_should_be_camel_case.severity = error
+dotnet_naming_rule.readonly_fields_should_be_camel_case.style = readonly_fields_style
+dotnet_naming_rule.readonly_fields_should_be_camel_case.symbols = readonly_fields_symbols
+
+dotnet_naming_style.readonly_fields_style.capitalization = pascal_case
+
+dotnet_naming_symbols.readonly_fields_symbols.applicable_accessibilities = public, protected_internal, protected, internal, private_protected, private, local
+dotnet_naming_symbols.readonly_fields_symbols.applicable_kinds = field
+dotnet_naming_symbols.readonly_fields_symbols.required_modifiers = readonly
+
+# Public/Protected Fields and Properties should be PascalCase
+dotnet_naming_rule.public_protected_fields_and_properties_should_be_pascal_case.severity = error
+dotnet_naming_rule.public_protected_fields_and_properties_should_be_pascal_case.style = public_protected_fields_and_properties_style
+dotnet_naming_rule.public_protected_fields_and_properties_should_be_pascal_case.symbols = public_protected_fields_and_properties_symbols
+
+dotnet_naming_style.public_protected_fields_and_properties_style.capitalization = pascal_case
+
+dotnet_naming_symbols.public_protected_fields_and_properties_symbols.applicable_accessibilities = public, protected, local
+dotnet_naming_symbols.public_protected_fields_and_properties_symbols.applicable_kinds = field,property
+
+# Public/Protected ReadOnly Fields and Properties should be PascalCase
+dotnet_naming_rule.public_protected_readonly_fields_and_properties_should_be_pascal_case.severity = error
+dotnet_naming_rule.public_protected_readonly_fields_and_properties_should_be_pascal_case.style = public_protected_readonly_fields_and_properties_style
+dotnet_naming_rule.public_protected_readonly_fields_and_properties_should_be_pascal_case.symbols = public_protected_readonly_fields_and_properties_symbols
+
+dotnet_naming_style.public_protected_readonly_fields_and_properties_style.capitalization = pascal_case
+
+dotnet_naming_symbols.public_protected_readonly_fields_and_properties_.applicable_accessibilities = public, protected, local
+dotnet_naming_symbols.public_protected_readonly_fields_and_properties_.applicable_kinds = field
+dotnet_naming_symbols.public_protected_readonly_fields_and_properties_.required_modifiers = readonly
+
+# Public/Protected Static Fields and Properties should be PascalCase
+dotnet_naming_rule.public_protected_static_fields_and_properties_should_be_pascal_case.severity = error
+dotnet_naming_rule.public_protected_static_fields_and_properties_should_be_pascal_case.style = public_protected_static_fields_and_properties_style
+dotnet_naming_rule.public_protected_static_fields_and_properties_should_be_pascal_case.symbols = public_protected_static_fields_and_properties_symbols
+
+dotnet_naming_style.public_protected_static_fields_and_properties_style.capitalization = pascal_case
+
+dotnet_naming_symbols.public_protected_static_fields_and_properties_symbols.applicable_accessibilities = public, protected, local
+dotnet_naming_symbols.public_protected_static_fields_and_properties_symbols.applicable_kinds = field
+dotnet_naming_symbols.public_protected_static_fields_and_properties_symbols.required_modifiers = static
+
+
+# Type Parameters should be PascalCase
+dotnet_naming_rule.type_parameters_should_be_pascal_case.severity = error
+dotnet_naming_rule.type_parameters_should_be_pascal_case.style = type_parameters_style
+dotnet_naming_rule.type_parameters_should_be_pascal_case.symbols = type_parameters_symbols
+
+dotnet_naming_style.type_parameters_style.capitalization = pascal_case
+
+dotnet_naming_symbols.type_parameters_symbols.applicable_accessibilities = *
+dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
+
+
+###########################
+# C# Coding Conventions   #
+###########################
+# See rules documentation - https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/language-rules
+# Based on: https://github.com/dotnet/roslyn-analyzers/blob/master/.editorconfig
+
+[*.cs]
+dotnet_diagnostic.bc42024.severity = error
+
+# Organize usings
+dotnet_separate_import_directive_groups = false
+dotnet_sort_system_directives_first = true
+
+# Namespace declaration style
+csharp_style_namespace_declarations = block_scoped:error
+
+# this. preferences
+dotnet_style_qualification_for_event = true:warning
+dotnet_style_qualification_for_field = true:warning
+dotnet_style_qualification_for_method = true:warning
+dotnet_style_qualification_for_property = true:warning
+
+resharper_arrange_this_qualifier_highlighting = 
+resharper_instance_members_qualify_declared_in = 
+
+# Language keywords vs BCL types preferences
+dotnet_style_predefined_type_for_locals_parameters_members = true:error
+dotnet_style_predefined_type_for_member_access = true:error
+
+# Parentheses preferences
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:error
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:error
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:error
+
+resharper_parentheses_redundancy_style = remove_if_not_clarifies_precedence
+resharper_arrange_redundant_parentheses_highlighting = error
+
+# Modifier preferences
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+csharp_preferred_modifier_order = public, protected, internal, private, static, new, abstract, virtual, override, sealed, readonly, extern, unsafe, volatile, async:warning
+csharp_prefer_static_local_function = true:error
+
+# Field preferences
+dotnet_style_readonly_field = false:silent
+
+# Parameter preferences
+dotnet_code_quality_unused_parameters = all:warning
+
+# Expression-level preferences
+dotnet_style_coalesce_expression = true:error
+dotnet_style_collection_initializer = true:error
+dotnet_style_explicit_tuple_names = true:error
+dotnet_style_null_propagation = true:error
+dotnet_style_object_initializer = true:error
+dotnet_style_prefer_auto_properties = true:error
+dotnet_style_prefer_compound_assignment = true:error
+dotnet_style_prefer_conditional_expression_over_assignment = true:error
+dotnet_style_prefer_conditional_expression_over_return = true:error
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:error
+dotnet_style_prefer_inferred_tuple_names = true:error
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:error
+dotnet_style_prefer_simplified_interpolation = true:error
+
+# Type preferences
+resharper_arrange_default_value_when_type_evident_highlighting = warning
+resharper_arrange_default_value_when_type_not_evident_highlighting = warning
+resharper_default_value_when_type_not_evident = default_expression
+resharper_arrange_object_creation_when_type_evident_highlighting = warning
+resharper_arrange_object_creation_when_type_not_evident_highlighting = warning
+resharper_arrange_type_member_modifiers_highlighting = error
+
+# var preferences
+csharp_style_var_elsewhere = true:warning
+csharp_style_var_for_built_in_types = true:warning
+csharp_style_var_when_type_is_apparent = true:warning
+resharper_suggest_var_or_type_built_in_types_highlighting = none
+
+# Expression-bodied members
+csharp_style_expression_bodied_methods = false:error
+csharp_style_expression_bodied_constructors = false:error
+csharp_style_expression_bodied_operators = false:error
+csharp_style_expression_bodied_properties = true:error
+csharp_style_expression_bodied_indexers = true:error
+csharp_style_expression_bodied_accessors = true:error
+resharper_arrange_local_function_body_highlighting = error
+resharper_local_function_body = block_body
+
+# Pattern matching preferences
+csharp_style_pattern_matching_over_as_with_null_check = true:error
+csharp_style_pattern_matching_over_is_with_cast_check = true:error
+csharp_style_prefer_switch_expression = true:error
+
+# Code-block preferences
+csharp_prefer_braces = true:error
+csharp_prefer_simple_using_statement = true:error
+resharper_invert_if_highlighting = none
+
+# Expression-level preferences
+csharp_style_unused_value_assignment_preference = discard_variable:warning
+csharp_prefer_simple_default_expression = true:error
+csharp_style_deconstructed_variable_declaration = true:error
+csharp_style_inlined_variable_declaration = true:error
+csharp_style_pattern_local_over_anonymous_function = true:error
+csharp_style_prefer_index_operator = true:error
+csharp_style_prefer_range_operator = true:error
+csharp_style_throw_expression = true:error
+csharp_style_unused_value_expression_statement_preference = discard_variable:silent
+resharper_redundant_base_qualifier_highlighting = none
+resharper_suggest_discard_declaration_var_style_highlighting = error
+
+# 'using' directive preferences
+csharp_using_directive_placement = inside_namespace:warning
+
+# Highlight names inconsistent with naming conventions
+resharper_inconsistent_naming_highlighting = warning
+
+# Seperate attributes
+resharper_arrange_attributes_highlighting = warning
+
+# Explicit discard declaration
+resharper_prefer_explicit_discard_declaration = true
+
+###########################
+# C# Formatting Rules     #
+###########################
+
+# New line preferences
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = false
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+csharp_preserve_single_line_statements = false
+
+resharper_blank_lines_after_control_transfer_statements = 1
+resharper_blank_lines_around_single_line_auto_property = 1
+resharper_blank_lines_around_single_line_field = 0
+resharper_blank_lines_before_multiline_statements = 1
+resharper_csharp_blank_lines_around_single_line_field = 0
+resharper_csharp_wrap_arguments_style = chop_if_long
+resharper_csharp_wrap_before_binary_opsign = true
+resharper_enforce_line_ending_style = true
+resharper_keep_existing_declaration_block_arrangement = false
+resharper_keep_existing_embedded_block_arrangement = false
+resharper_keep_existing_enum_arrangement = true
+resharper_keep_existing_initializer_arrangement = false
+resharper_place_accessorholder_attribute_on_same_line = false
+resharper_place_expr_property_on_single_line = true
+resharper_place_simple_embedded_statement_on_same_line = true
+resharper_place_simple_initializer_on_single_line = true
+resharper_wrap_chained_binary_expressions = chop_if_long
+resharper_wrap_enum_declaration = chop_always
+resharper_wrap_enum_style = line_break
+resharper_wrap_lines = true
+resharper_wrap_object_and_collection_initializer_style = wrap_if_long
+resharper_wrap_union_type_usage = chop_always
+
+# Indentation preferences
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_case_contents_when_block = true
+csharp_indent_labels = flush_left
+csharp_indent_switch_labels = true
+resharper_align_linq_query = true
+resharper_align_multiline_binary_expressions_chain = false
+resharper_align_multiline_statement_conditions = false
+resharper_align_tuple_components = true
+resharper_csharp_case_block_braces = next_line_shifted_2
+resharper_csharp_int_align_fix_in_adjacent = false
+resharper_outdent_binary_pattern_ops = true
+resharper_use_indent_from_vs = false
+
+# Space preferences
+csharp_space_after_cast = false
+csharp_space_after_colon_in_inheritance_clause = true
+csharp_space_after_comma = true
+csharp_space_after_dot = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_around_declaration_statements = false
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_before_comma = false
+csharp_space_before_dot = false
+csharp_space_before_open_square_brackets = false
+csharp_space_before_semicolon_in_for_statement = false
+csharp_space_between_empty_square_brackets = false
+csharp_space_between_method_call_empty_parameter_list_parentheses = false
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_parentheses = false
+csharp_space_between_square_brackets = false
+
+###########################################
+# Default severity for NET Analyzer rules #
+###########################################
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview#enable-on-build
+
+[*]
+
+# Default severity for analyzer diagnostics with category 'Style' (escalated to build warnings)
+dotnet_analyzer_diagnostic.category-style.severity = error
+
+# Default severity for all IDE code quality rules with category 'CodeQuality' (escalated to build warnings)
+dotnet_analyzer_diagnostic.category-codequality.severity = error
+
+###########################
+# Code Style              #
+###########################
+
+# IDE0005: Remove unnecessary import
+dotnet_diagnostic.ide0005.severity = error
+
+# IDE0007: Use 'var' instead of explicit type
+dotnet_diagnostic.ide0007.severity = error
+
+# IDE0008: Use explicit type instead of 'var'
+dotnet_diagnostic.ide0008.severity = none
+
+# IDE0010: Add missing cases in switch statement
+dotnet_diagnostic.ide0010.severity = error
+
+# IDE0021: Use expression body for constructors
+dotnet_diagnostic.ide0021.severity = none
+
+# IDE0034: Simplify 'default' expression
+dotnet_diagnostic.ide0034.severity = none
+
+# IDE0046: Use conditional expression for return
+dotnet_diagnostic.ide0046.severity = none
+ 
+# IDE0050: Convert anonymous type to tuple
+dotnet_diagnostic.ide0050.severity = error
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.ide0055.severity = error
+
+# IDE0058: Remove unnecessary expression value / csharp_style_unused_value_expression_statement_preference
+dotnet_diagnostic.ide0058.severity = none
+
+# IDE0063: Use simple 'using' statement / csharp_prefer_simple_using_statement
+dotnet_diagnostic.ide0063.severity = error
+
+# IDE0066: Convert switch statement to expression
+dotnet_diagnostic.ide0066.severity = none
+
+# IDE0071: Simplify interpolation / dotnet_style_prefer_simplified_interpolation
+dotnet_diagnostic.ide0071.severity = error
+
+# IDE1006: Naming rule violation
+dotnet_diagnostic.ide1006.severity = warning
+
+
+###########################
+# Compiler Messages       #
+###########################
+
+# CS0168: Compiler Warning (level 3) - The variable 'var' is declared but never used
+dotnet_diagnostic.cs0168.severity = error
+
+# CS0219: Compiler Warning (level 3) - The variable 'variable' is assigned but its value is never used
+dotnet_diagnostic.cs0219.severity = error
+
+# CS1591: Compiler Warning (level 4) - Missing XML comment for publicly visible type or member
+dotnet_diagnostic.cs1591.severity = error
+
+# CS8019: Unnecessary using directive
+dotnet_diagnostic.cs8019.severity = error
+
+#==========================
+# Nullable Reference types
+#==========================
+# CS8600: Converting null literal or possible null value to non-nullable type.
+dotnet_diagnostic.cs8600.severity = error
+
+# CS8602: Dereference of a possibly null reference.
+dotnet_diagnostic.cs8602.severity = error
+
+# CS8603: Possible null reference return.
+dotnet_diagnostic.cs8603.severity = error
+
+# CS8604: Possible null reference argument.
+dotnet_diagnostic.cs8604.severity = error
+
+# CS8605: Unboxing a possibly null value.
+dotnet_diagnostic.cs8605.severity = error
+
+# CS8606: Possible null reference assignment to iteration variable
+dotnet_diagnostic.cs8606.severity = error
+
+# CS8607: A possible null value may not be passed to a target marked with the [DisallowNull] attribute
+dotnet_diagnostic.cs8607.severity = error
+
+# CS8608: Nullability of reference types in type doesn't match overridden member.
+dotnet_diagnostic.cs8608.severity = error
+
+# CS8609: Nullability of reference types in return type doesn't match overridden member.
+dotnet_diagnostic.cs8609.severity = error
+
+# CS8610: Nullability of reference types in type of parameter doesn't match overridden member.
+dotnet_diagnostic.cs8610.severity = error
+
+# CS8611: Nullability of reference types in type of parameter doesn't match partial method declaration.
+dotnet_diagnostic.cs8611.severity = error
+
+# CS8612: Nullability of reference types in type doesn't match implicitly implemented member.
+dotnet_diagnostic.cs8612.severity = error
+
+# CS8613: Nullability of reference types in return type doesn't match implicitly implemented member.
+dotnet_diagnostic.cs8613.severity = error
+
+# CS8614: Nullability of reference types in type of parameter doesn't match implicitly implemented member.
+dotnet_diagnostic.cs8614.severity = error
+
+# CS8615: Nullability of reference types in type doesn't match implemented member.
+dotnet_diagnostic.cs8615.severity = error
+
+# CS8616: Nullability of reference types in return type doesn't match implemented member.
+dotnet_diagnostic.cs8616.severity = error
+
+# CS8617: Nullability of reference types in type of parameter doesn't match implemented member.
+dotnet_diagnostic.cs8617.severity = error
+
+# CS8618: Non-nullable property 'LastName' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
+dotnet_diagnostic.cs8618.severity = error
+
+# CS8619: Nullability of reference types in value doesn't match target type.
+dotnet_diagnostic.cs8619.severity = error
+
+# CS8620: Argument cannot be used for parameter due to differences in the nullability of reference types.
+dotnet_diagnostic.cs8620.severity = error
+
+# CS8621: Nullability of reference types in return type doesn't match the target delegate.
+dotnet_diagnostic.cs8621.severity = error
+
+# CS8622: Nullability of reference types in type of parameter doesn't match the target delegate.
+dotnet_diagnostic.cs8622.severity = error
+
+# CS8624: Argument cannot be used as an output for parameter due to differences in the nullability of reference types.
+dotnet_diagnostic.cs8624.severity = error
+
+# CS8625: Cannot convert null literal to non-nullable reference type.
+dotnet_diagnostic.cs8625.severity = error
+
+# CS8626: The 'as' operator may produce a null value for a type parameter.
+dotnet_diagnostic.cs8626.severity = error
+
+# CS8629: Nullable value type may be null.
+dotnet_diagnostic.cs8629.severity = error
+
+# CS8631: The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match constraint type.
+dotnet_diagnostic.cs8631.severity = error
+
+# CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+dotnet_diagnostic.cs8632.severity = error
+
+# CS8633: Nullability in constraints for type parameter doesn't match the constraints for type parameter in implicitly implemented interface method.
+dotnet_diagnostic.cs8633.severity = error
+
+# CS8634: The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'class' constraint.
+dotnet_diagnostic.cs8634.severity = error
+
+# CS8638: Conditional access may produce a null value for a type parameter.
+dotnet_diagnostic.cs8638.severity = error
+
+# CS8643: Nullability of reference types in explicit interface specifier doesn't match interface implemented by the type.
+dotnet_diagnostic.cs8643.severity = error
+
+# CS8644: Type does not implement interface member. Nullability of reference types in interface implemented by the base type doesn't match.
+dotnet_diagnostic.cs8644.severity = error
+
+# CS8645: Interface is already listed in the interface list with different nullability of reference types.
+dotnet_diagnostic.cs8645.severity = error
+
+# CS8653: A default expression introduces a null value for a type parameter.
+dotnet_diagnostic.cs8653.severity = error
+
+# CS8654: A null literal introduces a null value for a type parameter.
+dotnet_diagnostic.cs8654.severity = error
+
+# CS8655: The switch expression does not handle some null inputs.
+dotnet_diagnostic.cs8655.severity = error
+
+# CS8667: Partial method declarations have inconsistent nullability in constraints for type parameter
+dotnet_diagnostic.cs8667.severity = error
+
+# CS8714: The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match 'notnull' constraint.
+dotnet_diagnostic.cs8714.severity = error
+
+
+###########################
+# Code Quality            #
+###########################
+
+# Default analyzed API surface = 'all' (public APIs + non-public APIs)
+dotnet_code_quality.api_surface = all
+
+# CA1002: Do not expose generic lists
+dotnet_diagnostic.ca1002.severity = error
+
+# CA1024: Use properties where appropriate
+dotnet_diagnostic.ca1024.severity = error
+
+# CA1033: Interface methods should be callable by child types
+dotnet_diagnostic.ca1033.severity = error
+
+# CA1043: Use integral or string argument for indexers
+# Restrict the analyzed API surface for certain analyzers to 'public' (public APIs only).
+dotnet_code_quality.ca1043.api_surface = public
+
+# CA1062: Validate arguments of public/protected methods
+# An externally visible method dereferences one of its reference arguments without verifying whether that argument is null
+# This predates the Nullable Reference Type language features.
+dotnet_diagnostic.ca1062.severity = error
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.ca1303.severity = error
+
+# CA1307: Specify StringComparison for clarity
+dotnet_diagnostic.ca1307.severity = error
+
+# CA1309: Use ordinal string comparison
+dotnet_diagnostic.ca1309.severity = error
+
+# CA1707: Identifiers should not contain underscores
+dotnet_code_quality.ca1707.api_surface = public
+
+# CA1711: Identifiers should not have incorrect suffix
+dotnet_diagnostic.ca1711.severity = error
+
+# CA1715: Identifiers should have correct prefix
+# But exclude single letter type parameter names
+dotnet_code_quality.ca1715.exclude_single_letter_type_parameters = true
+
+# CA1720: Identifiers should not contain type names
+dotnet_code_quality.ca1720.api_surface = public
+
+# CA1725: Parameter names should match base declaration
+dotnet_diagnostic.ca1725.severity = error
+
+# CA1801: Unused parameters / IDE0060 / RCS1163
+dotnet_diagnostic.ca1801.severity = error
+
+# CA2227: Collection properties should be read only
+dotnet_diagnostic.ca2227.severity = error
+
+
+
+
+# Microsoft .NET properties
+csharp_preserve_single_line_blocks = false
+resharper_redundant_empty_switch_section_highlighting = none
+
+# Null-checking preferences
+csharp_style_conditional_delegate_call = true:error
+
+# ReSharper properties
+resharper_align_multline_type_parameter_constrains = true
+resharper_braces_redundant = true
+resharper_csharp_align_multiline_parameter = false
+resharper_csharp_indent_size = 4
+resharper_csharp_indent_type_constraints = false
+resharper_csharp_tab_width = 4
+resharper_csharp_use_indent_from_previous_element = false
+resharper_csharp_wrap_after_declaration_lpar = true
+resharper_csharp_wrap_chained_method_calls = chop_if_long
+resharper_csharp_wrap_multiple_type_parameter_constraints_style = chop_always
+resharper_keep_existing_arrangement = false
+resharper_max_attribute_length_for_same_line = 100
+resharper_nested_ternary_style = compact
+resharper_csharp_wrap_before_ternary_opsigns = true
+resharper_csharp_wrap_ternary_expr_style = wrap_if_long
+resharper_place_type_constraints_on_same_line = true
+resharper_prefer_explicit_discard_declaration = true
+resharper_wrap_array_initializer_style = wrap_if_long
+resharper_wrap_before_arrow_with_expressions = true
+resharper_wrap_before_first_type_parameter_constraint = false
+resharper_wrap_chained_binary_patterns = chop_if_long
+
+# ReSharper inspection severities
+resharper_arrange_accessor_owner_body_highlighting = warning
+resharper_arrange_attributes_highlighting = warning
+resharper_arrange_constructor_or_destructor_body_highlighting = warning
+resharper_arrange_local_function_body_highlighting = warning
+resharper_arrange_method_or_operator_body_highlighting = warning
+resharper_arrange_static_member_qualifier_highlighting = warning
+resharper_arrange_trailing_comma_in_multiline_lists_highlighting = warning
+resharper_arrange_trailing_comma_in_singleline_lists_highlighting = warning
+resharper_arrange_var_keywords_in_deconstructing_declaration_highlighting = warning
+resharper_suggest_discard_declaration_var_style_highlighting = warning
+
+
+###########################
+# Roslynator Analysers    #
+###########################
+
+# Formatting analyzers (RCS0xxx) - http://pihrt.net/Roslynator/Analyzers?Query=RCS0
+
+# Common analyzers (RCS1xxx) - http://pihrt.net/Roslynator/Analyzers?Query=RCS1
+dotnet_diagnostic.rcs1007.severity = error
+
+# Covered by IDE0007
+# RCS1010: Use 'var' instead of explicit type
+dotnet_diagnostic.rcs1010.severity = none
+
+dotnet_diagnostic.rcs1013.severity = error
+dotnet_diagnostic.rcs1014.severity = error
+dotnet_diagnostic.rcs1015.severity = error
+dotnet_diagnostic.rcs1019.severity = error
+dotnet_diagnostic.rcs1020.severity = error
+dotnet_diagnostic.rcs1021.severity = error
+dotnet_diagnostic.rcs1024.severity = error
+dotnet_diagnostic.rcs1027.severity = error
+dotnet_diagnostic.rcs1028.severity = error
+dotnet_diagnostic.rcs1032.severity = error
+dotnet_diagnostic.rcs1033.severity = error
+dotnet_diagnostic.rcs1035.severity = error
+dotnet_diagnostic.rcs1036.severity = error
+dotnet_diagnostic.rcs1037.severity = error
+dotnet_diagnostic.rcs1038.severity = error
+dotnet_diagnostic.rcs1039.severity = error
+dotnet_diagnostic.rcs1040.severity = error
+dotnet_diagnostic.rcs1041.severity = error
+dotnet_diagnostic.rcs1044.severity = error
+dotnet_diagnostic.rcs1045.severity = error
+dotnet_diagnostic.rcs1046.severity = error
+dotnet_diagnostic.rcs1047.severity = error
+dotnet_diagnostic.rcs1048.severity = error
+dotnet_diagnostic.rcs1049.severity = error
+dotnet_diagnostic.rcs1052.severity = error
+dotnet_diagnostic.rcs1055.severity = error
+dotnet_diagnostic.rcs1057.severity = error
+dotnet_diagnostic.rcs1058.severity = error
+dotnet_diagnostic.rcs1059.severity = error
+dotnet_diagnostic.rcs1061.severity = error
+dotnet_diagnostic.rcs1062.severity = error
+dotnet_diagnostic.rcs1063.severity = error
+dotnet_diagnostic.rcs1064.severity = error
+dotnet_diagnostic.rcs1066.severity = error
+dotnet_diagnostic.rcs1068.severity = error
+dotnet_diagnostic.rcs1069.severity = error
+dotnet_diagnostic.rcs1070.severity = error
+dotnet_diagnostic.rcs1071.severity = error
+dotnet_diagnostic.rcs1072.severity = error
+dotnet_diagnostic.rcs1073.severity = error
+dotnet_diagnostic.rcs1074.severity = error
+dotnet_diagnostic.rcs1075.severity = error
+dotnet_diagnostic.rcs1076.severity = error
+dotnet_diagnostic.rcs1077.severity = error
+dotnet_diagnostic.rcs1079.severity = error
+dotnet_diagnostic.rcs1081.severity = error
+dotnet_diagnostic.rcs1084.severity = error
+dotnet_diagnostic.rcs1085.severity = error
+dotnet_diagnostic.rcs1088.severity = error
+dotnet_diagnostic.rcs1091.severity = error
+dotnet_diagnostic.rcs1093.severity = error
+dotnet_diagnostic.rcs1094.severity = error
+dotnet_diagnostic.rcs1097.severity = error
+dotnet_diagnostic.rcs1098.severity = error
+dotnet_diagnostic.rcs1099.severity = error
+dotnet_diagnostic.rcs1103.severity = error
+dotnet_diagnostic.rcs1104.severity = error
+dotnet_diagnostic.rcs1105.severity = error
+dotnet_diagnostic.rcs1106.severity = error
+dotnet_diagnostic.rcs1107.severity = error
+dotnet_diagnostic.rcs1110.severity = error
+dotnet_diagnostic.rcs1112.severity = error
+dotnet_diagnostic.rcs1113.severity = error
+dotnet_diagnostic.rcs1114.severity = error
+dotnet_diagnostic.rcs1123.severity = error
+dotnet_diagnostic.rcs1126.severity = error
+dotnet_diagnostic.rcs1127.severity = error
+dotnet_diagnostic.rcs1128.severity = error
+dotnet_diagnostic.rcs1132.severity = error
+
+# RCS1138: Add summary to documentation comment
+dotnet_diagnostic.rcs1138.severity = error
+
+# RCS1139: Add summary element to documentation comment
+dotnet_diagnostic.rcs1139.severity = error
+
+dotnet_diagnostic.rcs1146.severity = error
+dotnet_diagnostic.rcs1151.severity = error
+dotnet_diagnostic.rcs1153.severity = error
+dotnet_diagnostic.rcs1154.severity = error
+dotnet_diagnostic.rcs1155.severity = error
+dotnet_diagnostic.rcs1160.severity = error
+dotnet_diagnostic.rcs1162.severity = error
+
+# Covered by CA1801: Unused parameters
+dotnet_diagnostic.rcs1163.severity = error
+
+dotnet_diagnostic.rcs1164.severity = error
+dotnet_diagnostic.rcs1166.severity = error
+
+# RCS1168: Parameter name differs from base name
+dotnet_diagnostic.rcs1168.severity = error
+
+dotnet_diagnostic.rcs1171.severity = error
+dotnet_diagnostic.rcs1172.severity = error
+dotnet_diagnostic.rcs1173.severity = error
+dotnet_diagnostic.rcs1174.severity = error
+dotnet_diagnostic.rcs1175.severity = error
+dotnet_diagnostic.rcs1179.severity = error
+dotnet_diagnostic.rcs1182.severity = error
+dotnet_diagnostic.rcs1186.severity = error
+dotnet_diagnostic.rcs1187.severity = error
+dotnet_diagnostic.rcs1188.severity = error
+dotnet_diagnostic.rcs1190.severity = error
+dotnet_diagnostic.rcs1191.severity = error
+dotnet_diagnostic.rcs1192.severity = error
+dotnet_diagnostic.rcs1193.severity = error
+dotnet_diagnostic.rcs1194.severity = error
+dotnet_diagnostic.rcs1195.severity = error
+dotnet_diagnostic.rcs1196.severity = error
+dotnet_diagnostic.rcs1197.severity = error
+dotnet_diagnostic.rcs1198.severity = error
+dotnet_diagnostic.rcs1199.severity = error
+dotnet_diagnostic.rcs1201.severity = error
+dotnet_diagnostic.rcs1202.severity = error
+dotnet_diagnostic.rcs1203.severity = error
+dotnet_diagnostic.rcs1204.severity = error
+dotnet_diagnostic.rcs1205.severity = error
+dotnet_diagnostic.rcs1206.severity = error
+dotnet_diagnostic.rcs1208.severity = error
+dotnet_diagnostic.rcs1209.severity = error
+dotnet_diagnostic.rcs1210.severity = error
+dotnet_diagnostic.rcs1211.severity = error
+dotnet_diagnostic.rcs1212.severity = error
+dotnet_diagnostic.rcs1213.severity = error
+dotnet_diagnostic.rcs1214.severity = error
+dotnet_diagnostic.rcs1215.severity = error
+dotnet_diagnostic.rcs1216.severity = error
+dotnet_diagnostic.rcs1218.severity = error
+dotnet_diagnostic.rcs1224.severity = error
+dotnet_diagnostic.rcs1225.severity = error
+dotnet_diagnostic.rcs1229.severity = error
+dotnet_diagnostic.rcs1230.severity = error
+dotnet_diagnostic.rcs1234.severity = error
+dotnet_diagnostic.rcs1235.severity = error
+dotnet_diagnostic.rcs1236.severity = error
+dotnet_diagnostic.rcs1239.severity = error
+dotnet_diagnostic.rcs1240.severity = error
+dotnet_diagnostic.rcs1243.severity = error
+dotnet_diagnostic.rcs1244.severity = error
