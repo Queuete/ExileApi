@@ -1,16 +1,5 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Diagnostics;
 using System.Windows.Forms;
-using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
-using Serilog;
-using SharpDX;
-using SharpDX.Windows;
 
 namespace Loader
 {
