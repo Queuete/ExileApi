@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using SharpDX;
 
 namespace GameOffsets
@@ -11,9 +11,9 @@ namespace GameOffsets
         [FieldOffset(0x260)] public int GridX;
         [FieldOffset(0x264)] public int GridY;
         [FieldOffset(0x268)] public float Rotation;
-        [FieldOffset(0x280)] public float Scale;
-        [FieldOffset(0x284)] public int Size;
-        [FieldOffset(0x28C)] public float WorldX;
-        [FieldOffset(0x290)] public float WorldY;
+        [FieldOffset(0x27C)] public float Scale;
+        [FieldOffset(0x280)] public int Size;
+        [FieldOffset(0x288)] public float WorldX;
+        [FieldOffset(0x28C)] public float WorldY;
     }
 }
