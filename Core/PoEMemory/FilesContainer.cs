@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,6 +13,8 @@ using ExileCore.Shared.Static;
 
 namespace ExileCore.PoEMemory
 {
+    using System.Threading.Tasks;
+
     public class FilesContainer
     {
         private readonly IMemory _Memory;
@@ -48,6 +50,16 @@ namespace ExileCore.PoEMemory
             FilesFromMemory = new FilesFromMemory(_Memory);
 
             ReloadFiles();
+
+            Task.Run(() =>
+            {
+                using (new PerformanceTimer("Preload stats and mods"))
+                {
+                    var _ = this.Stats.records.Count;
+                    var __ = this.Mods.records.Count;
+                    this.ParseFiles(this.AllFiles);
+                }
+            });
         }
 
         #region Misc
@@ -216,18 +228,18 @@ namespace ExileCore.PoEMemory
         #endregion
 
         public Dictionary<string, FileInformation> AllFiles { get; private set; }
-        public Dictionary<string, FileInformation> Metadata { get; } = new Dictionary<string, FileInformation>();
+        public SortedList<string, FileInformation> Metadata { get; } = new SortedList<string, FileInformation>();
 
-        public Dictionary<string, FileInformation> Data { get; private set; } =
-            new Dictionary<string, FileInformation>();
+        public SortedList<string, FileInformation> Data { get; private set; } =
+            new SortedList<string, FileInformation>();
 
-        public Dictionary<string, FileInformation> OtherFiles { get; } = new Dictionary<string, FileInformation>();
+        public SortedList<string, FileInformation> OtherFiles { get; } = new SortedList<string, FileInformation>();
 
-        public Dictionary<string, FileInformation> LoadedInThisArea { get; private set; } =
-            new Dictionary<string, FileInformation>(1024);
+        public SortedList<string, FileInformation> LoadedInThisArea { get; private set; } =
+            new SortedList<string, FileInformation>(1024);
 
 
-        public event EventHandler<Dictionary<string, FileInformation>> LoadedFiles;
+        public event EventHandler<SortedList<string, FileInformation>> LoadedFiles;
 
         public void ReloadFiles()
         {
@@ -241,37 +253,25 @@ namespace ExileCore.PoEMemory
         {
             foreach (var file in files)
             {
-                if (file.Key[0] == 'M' && file.Key[8] == '/')
-                    Metadata[file.Key] = file.Value;
-                else if (file.Key[0] == 'D' && file.Key[4] == '/' && file.Key.EndsWith(".dat"))
-                    Data[file.Key] = file.Value;
-                else
-                    OtherFiles[file.Key] = file.Value;
+                this.Do_ParseFiles(file);
             }
-
-            Data = Data.OrderBy(x => x.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        public void ParseFiles(int gameAreaChangeCount)
+        public void ParseLoadedFiles(int gameAreaChangeCount)
         {
-            if (AllFiles != null)
+            this.LoadedInThisArea = new SortedList<string, FileInformation>(1024);
+
+            foreach (var file in this.AllFiles)
             {
-                LoadedInThisArea = new Dictionary<string, FileInformation>(1024);
-
-                foreach (var file in AllFiles)
+                if (file.Value.ChangeCount == gameAreaChangeCount)
                 {
-                    if (file.Value.ChangeCount == gameAreaChangeCount) LoadedInThisArea[file.Key] = file.Value;
-
-                    if (file.Key[0] == 'M' && file.Key[8] == '/')
-                        Metadata[file.Key] = file.Value;
-                    else if (file.Key[0] == 'D' && file.Key[4] == '/' && file.Key.EndsWith(".dat"))
-                        Data[file.Key] = file.Value;
-                    else
-                        OtherFiles[file.Key] = file.Value;
+                    this.LoadedInThisArea[file.Key] = file.Value;
                 }
 
-                LoadedFiles?.Invoke(this, LoadedInThisArea);
+                this.Do_ParseFiles(file);
             }
+
+            this.LoadedFiles?.Invoke(this, this.LoadedInThisArea);
         }
 
         public long FindFile(string name)
@@ -290,6 +290,30 @@ namespace ExileCore.PoEMemory
             }
 
             return 0;
+        }
+
+        private void Do_ParseFiles(KeyValuePair<string, FileInformation> file)
+        {
+            if (file.Key.StartsWith("Metadata/"))
+            {
+                this.Metadata[file.Key] = file.Value;
+            }
+            else if (file.Key.EndsWith(".dat"))
+            {
+                this.Data[file.Key] = file.Value;
+            }
+            //else if (file.Key.StartsWith("Art", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    this.Art[file.Key] = file.Value;
+            //}
+            //else if (file.Key.StartsWith("Font", StringComparison.OrdinalIgnoreCase))
+            //{
+            //    this.Font[file.Key] = file.Value;
+            //}
+            else
+            {
+                this.OtherFiles[file.Key] = file.Value;
+            }
         }
     }
 }

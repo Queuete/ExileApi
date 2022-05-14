@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ExileCore.Shared.Interfaces;
 
@@ -17,7 +17,7 @@ namespace ExileCore.PoEMemory
 
         public IMemory M { get; }
         public long Address { get; }
-        private int NumberOfRecords => M.Read<int>(fAddress() + 0x30, 0x20);
+        private int NumberOfRecords => M.Read<int>(fAddress() + 0x30, 0x40);
 
         protected IEnumerable<long> RecordAddresses()
         {

@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using GameOffsets.Native;
 using SharpDX;
 
@@ -17,9 +17,9 @@ namespace GameOffsets
         [FieldOffset(0x210)] public Vector2i MousePos;
         [FieldOffset(0x21C)] public Vector2 UIHoverOffset; // mouse position offset in hovered UI element
         [FieldOffset(0x224)] public Vector2 MousePosFloat;
-        [FieldOffset(0x3F8)] public float TimeInGameF; // time since last frame in seconds
-        [FieldOffset(0x3FC)] public float TimeInGame; // total time in game in seconds
-        [FieldOffset(0x438)] public long IngameUi;
+        [FieldOffset(0x40C)] public float TimeInGameF; // time since last frame in seconds
+        [FieldOffset(0x410)] public float TimeInGame; // total time in game in seconds
+        [FieldOffset(0x448)] public long IngameUi;
         [FieldOffset(0x620)] public int DiagnosticInfoType; // Incorrect?
         [FieldOffset(0x850)] public long LatencyRectangle; // Incorrect
         [FieldOffset(0xCF0)] public long FrameTimeRectangle; // Incorrect
