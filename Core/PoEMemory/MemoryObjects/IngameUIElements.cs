@@ -34,13 +34,13 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public IngameUElementsOffsets IngameUIElementsStruct => _cachedValue.Value;
         public GameUi GameUI => GetObject<GameUi>(IngameUIElementsStruct.GameUI);
         public SellWindow SellWindow => GetObject<SellWindow>(IngameUIElementsStruct.SellWindow);
+        public SellWindow LeagueSellWindow => GetObject<SellWindow>(IngameUIElementsStruct.LeagueSellWindow);
         public TradeWindow TradeWindow => GetObject<TradeWindow>(IngameUIElementsStruct.TradeWindow);
         public NpcDialog NpcDialog => GetObject<NpcDialog>(IngameUIElementsStruct.NpcDialog);
         public BanditDialog BanditDialog => GetObject<BanditDialog>(IngameUIElementsStruct.BanditDialog);
         public Element PurchaseWindow => _purchaseWindow = _purchaseWindow ?? GetObject<Element>(IngameUIElementsStruct.PurchaseWindow);
-
         public Element HaggleWindow =>
-            _haggleWindow = _haggleWindow ?? GetObject<Element>(IngameUIElementsStruct.ExpeditionPurchaseWindow);
+            _haggleWindow = _haggleWindow ?? GetObject<Element>(IngameUIElementsStruct.LeaguePurchaseWindow);
         public SubterraneanChart DelveWindow => _DelveWindow = _DelveWindow ?? GetObject<SubterraneanChart>(IngameUIElementsStruct.DelveWindow);
         public SkillBarElement SkillBar => GetObject<SkillBarElement>(IngameUIElementsStruct.SkillBar);
         public SkillBarElement HiddenSkillBar => GetObject<SkillBarElement>(IngameUIElementsStruct.HiddenSkillBar);
