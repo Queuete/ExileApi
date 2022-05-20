@@ -33,12 +33,37 @@ namespace ExileCore.PoEMemory.MemoryObjects
 
         public IngameUElementsOffsets IngameUIElementsStruct => _cachedValue.Value;
         public GameUi GameUI => GetObject<GameUi>(IngameUIElementsStruct.GameUI);
-        public SellWindow SellWindow => GetObject<SellWindow>(IngameUIElementsStruct.SellWindow);
-        public SellWindow LeagueSellWindow => GetObject<SellWindow>(IngameUIElementsStruct.LeagueSellWindow);
+        public SellWindow SellWindow
+        {
+            get
+            {
+                var sellWindow = this.GetObject<SellWindow>(this.IngameUIElementsStruct.SellWindow);
+
+                if (sellWindow != null && sellWindow.IsVisibleLocal)
+                {
+                    return sellWindow;
+                }
+                return this.GetObject<SellWindow>(this.IngameUIElementsStruct.LeagueSellWindow);
+            }
+        }
+
         public TradeWindow TradeWindow => GetObject<TradeWindow>(IngameUIElementsStruct.TradeWindow);
         public NpcDialog NpcDialog => GetObject<NpcDialog>(IngameUIElementsStruct.NpcDialog);
         public BanditDialog BanditDialog => GetObject<BanditDialog>(IngameUIElementsStruct.BanditDialog);
-        public Element PurchaseWindow => _purchaseWindow = _purchaseWindow ?? GetObject<Element>(IngameUIElementsStruct.PurchaseWindow);
+        public Element PurchaseWindow
+        {
+            get
+            {
+                var purchaseWindow = this.GetObject<Element>(this.IngameUIElementsStruct.PurchaseWindow);
+
+                if (purchaseWindow != null && purchaseWindow.IsVisibleLocal)
+                {
+                    return purchaseWindow;
+                }
+                return this.GetObject<Element>(this.IngameUIElementsStruct.LeaguePurchaseWindow);
+            }
+        }
+
         public Element HaggleWindow =>
             _haggleWindow = _haggleWindow ?? GetObject<Element>(IngameUIElementsStruct.LeaguePurchaseWindow);
         public SubterraneanChart DelveWindow => _DelveWindow = _DelveWindow ?? GetObject<SubterraneanChart>(IngameUIElementsStruct.DelveWindow);
@@ -54,6 +79,8 @@ namespace ExileCore.PoEMemory.MemoryObjects
         public Element OpenLeftPanel => GetObject<Element>(IngameUIElementsStruct.OpenLeftPanel);
         public Element OpenRightPanel => GetObject<Element>(IngameUIElementsStruct.OpenRightPanel);
         public StashElement StashElement => GetObject<StashElement>(IngameUIElementsStruct.StashElement);
+
+        public StashElement GuildStash => GetObject<StashElement>(IngameUIElementsStruct.GuildStashElement);
         public InventoryElement InventoryPanel => GetObject<InventoryElement>(IngameUIElementsStruct.InventoryPanel);
         public Element TreePanel => GetChildAtIndex(25);
         public Element PVPPanel => GetChildAtIndex(26);
