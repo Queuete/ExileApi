@@ -16,7 +16,7 @@ namespace ExileCore.PoEMemory.Elements.InventoryElements
             var scrollBarPanel = this.Parent.Parent.Parent.Parent[2];
 
             var currentTicksY = this.M.Read<int>(scrollBarPanel.Address + 0x29C);
-<<<<<<< HEAD
+
             unshiftedPosition.Y -= 72.56f * currentTicksY; // TODO: Check if needs to be scaled by resolution
 
             return unshiftedPosition;
