@@ -1,4 +1,4 @@
-using SharpDX;
+﻿using SharpDX;
 
 namespace ExileCore.PoEMemory.Elements.InventoryElements
 {
@@ -11,14 +11,13 @@ namespace ExileCore.PoEMemory.Elements.InventoryElements
 
         public override RectangleF GetClientRect()
         {
-            var tmp = Parent.GetClientRect();
+            var unshiftedPosition = this.Parent.Parent.GetClientRect();
 
-            // div stash tab scrollbar element scroll value calculator
-            var addr = Parent.Parent.Parent.Parent.Children[2].Address + 0xA64;
-            var sub = M.Read<int>(addr) * (float) 107.5;
-            tmp.Y -= sub;
+            var scrollBarPanel = this.Parent.Parent.Parent.Parent[2];
 
-            return tmp;
+            var currentTicksY = this.M.Read<int>(scrollBarPanel.Address + 0x29C);
+            unshiftedPosition.Y -= 72.56f * currentTicksY; // TODO: Check if needs to be scaled by resolution
+            return unshiftedPosition;
         }
     }
 }
