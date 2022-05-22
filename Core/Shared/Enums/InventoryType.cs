@@ -1,8 +1,8 @@
-namespace ExileCore.Shared.Enums
+﻿namespace ExileCore.Shared.Enums
 {
     public enum InventoryType
     {
-        InvalidInventory, //Incase inventory isn't opened.
+        InvalidInventory,
         PlayerInventory,
         NormalStash,
         QuadStash,
@@ -15,6 +15,8 @@ namespace ExileCore.Shared.Enums
         UniqueStash,
         BlightStash,
         DeliriumStash,
-        MetamorphStash
+        MetamorphStash,
+        FlaskStash,
+        GemStash
     }
 }

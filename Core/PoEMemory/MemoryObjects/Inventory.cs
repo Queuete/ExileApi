@@ -1,290 +1,408 @@
-using System.Collections.Generic;
-using ExileCore.PoEMemory.Elements.InventoryElements;
-using ExileCore.Shared.Cache;
-using ExileCore.Shared.Enums;
-using ExileCore.Shared.Helpers;
-using GameOffsets;
-
-namespace ExileCore.PoEMemory.MemoryObjects
+﻿namespace ExileCore.PoEMemory.MemoryObjects
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using ExileCore.PoEMemory.Elements.InventoryElements;
+    using ExileCore.Shared.Cache;
+    using ExileCore.Shared.Enums;
+    using GameOffsets;
+
     public class Inventory : Element
     {
-        private readonly CachedValue<InventoryOffsets> _cachedValue;
+        private readonly CachedValue<InventoryOffsets> CachedData;
         private InventoryType _cacheInventoryType;
 
         public Inventory()
         {
-            _cachedValue = new FrameCache<InventoryOffsets>(() => M.Read<InventoryOffsets>(Address));
+            this.CachedData = new FrameCache<InventoryOffsets>(() => this.M.Read<InventoryOffsets>(this.Address));
         }
 
-        public long ItemCount => InventoryStruct.ItemCount; // M.Read<long>(Address + ItemCountOff); //This one is correct
-        public long TotalBoxesInInventoryRow => InventoryStruct.TotalBoxesInInventoryRow; // M.Read<int>(Address + TotalBoxesInInventoryRowOff);
-        private InventoryOffsets InventoryStruct => _cachedValue.Value;
-        public NormalInventoryItem HoverItem => InventoryStruct.HoverItem == 0 ? null : GetObject<NormalInventoryItem>(InventoryStruct.HoverItem);
-        public int MoveItemHoverState => InventoryStruct.MoveItemHoverState;
-        public new int X => InventoryStruct.XReal;
-        public new int Y => InventoryStruct.YReal;
-        public int XFake => InventoryStruct.XFake;
-        public int YFake => InventoryStruct.YFake;
-        public bool CursorHoverInventory => InventoryStruct.CursorInInventory == 1;
-        public InventoryType InvType => GetInvType();
-        public Element InventoryUIElement => getInventoryElement();
+        public bool CursorHoverInventory => this._data.CursorInInventory == 1;
 
-        // Shows Item details of visible inventory/stashes
+        public NormalInventoryItem HoverItem => this._data.HoverItem == 0 ? null
+            : this.GetObject<NormalInventoryItem>(this._data.HoverItem);
+
+        public Element InventoryUIElement => this.GetInventoryRootElement();
+
+        public InventoryType InvType => this.GetInventoryType();
+
+        public long ItemCount => this._data.ItemCount;
+
+        public int MoveItemHoverState => this._data.MoveItemHoverState;
+
+        public long TotalBoxesInInventoryRow => this._data.TotalBoxesInInventoryRow;
+
+        /// <summary>
+        ///     Shows Item details of locally visible inventories
+        /// </summary>
+        /// <returns>
+        ///     A list of locally visible items.
+        /// </returns>
+        /// <remarks>
+        ///     The data found here is what is populated into UI panels on server request by the game. Note that these items are "locally visible", as
+        ///     in they still exist when you switch/close panels, until you change zones or request new data that wipes the old data. Previous
+        ///     implementations simply dumped every item it could find to the user. For the basic inventories that have fixed sizes, this isn't an
+        ///     issue. More recent tabs (Divination, Flask, Gems, Unique) use a flexible layout where items appear based on the filters provided by the
+        ///     tab and will positionally move relative to other items. These inventory tabs are susceptible to overflowing the parent container and
+        ///     not actually being visible. It's the users responsibility to check if the item is actually visible (e.g. intersects or contained within
+        ///     some ancestral parent).
+        /// </remarks>
         public IList<NormalInventoryItem> VisibleInventoryItems
         {
             get
             {
-                var InvRoot = InventoryUIElement;
+                var inventoryRoot = this.InventoryUIElement;
 
-                if (InvRoot == null || InvRoot.Address == 0x00)
+                if (inventoryRoot == null || inventoryRoot.Address == 0x00)
+                {
                     return null;
-                /*else if (!InvRoot.IsVisible)
-                    return null;*/
+                }
 
                 var list = new List<NormalInventoryItem>();
 
-                switch (InvType)
+                switch (this.InvType)
                 {
                     case InventoryType.PlayerInventory:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount == 0) continue; //3.3 fix, Can cause problems but filter out first incorrect item
-                            var normalItem = item.AsObject<NormalInventoryItem>();
-                            list.Add(normalItem);
-                        }
-                        break;
-
                     case InventoryType.NormalStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount == 0) continue; //3.3 fix, Can cause problems but filter out first incorrect item
-                            var normalItem = item.AsObject<NormalInventoryItem>();
-                            list.Add(normalItem);
-                        }
-                        break;
-
                     case InventoryType.QuadStash:
-                        foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount == 0) continue; //3.3 fix, Can cause problems but filter out first incorrect item
-                            var normalItem = item.AsObject<NormalInventoryItem>();
-                            list.Add(normalItem);
+                            var tabAgnosticItemSlots = inventoryRoot.Children.Where(slot => slot.ChildCount != 0);
+                            list.AddRange(tabAgnosticItemSlots.Select(slot => slot.AsObject<NormalInventoryItem>()));
+                            return list;
                         }
-                        break;
-
-                    //For 3.3 child count is 3, not 2 as earlier, so we using the second one
-                    case InventoryType.CurrencyStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<CurrencyInventoryItem>());
-                        }
-                        break;
-
-                    case InventoryType.EssenceStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<EssenceInventoryItem>());
-                        }
-                        break;
-
-                    case InventoryType.FragmentStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<FragmentInventoryItem>());
-                        }
-                        break;
-
-                    case InventoryType.DivinationStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            // Divination Stash tab isn't loaded.
-                            if (item.ChildCount < 2)
-                                return null;
-
-                            if (item.Children[1].ChildCount > 1)
-                                list.Add(item[1][1].AsObject<DivinationInventoryItem>());
-                        }
-                        break;
-
-                    case InventoryType.MapStash:
-                        foreach (var subInventories in InvRoot.Children[3].Children)
-                        {
-                            // VisibleInventoryItems would only be found in Visible Sub Inventory :p
-                            if (!subInventories.IsVisible)
-                                continue;
-
-                            // All empty sub Inventories have full ChildCount (72) but all childcount have 0 items.
-                            if (subInventories.ChildCount == 72 &&
-                                subInventories.Children[0].AsObject<NormalInventoryItem>().Item.Address == 0x00)
-                                continue;
-
-                            foreach (var item in subInventories.Children)
-                            {
-                                if (item.ChildCount == 0) continue; //3.3 fix
-                                list.Add(item.AsObject<NormalInventoryItem>());
-                            }
-                        }
-                        break;
-
-                    case InventoryType.DelveStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<DelveInventoryItem>());
-                        }
-                        break;
 
                     case InventoryType.BlightStash:
-                        foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<BlightInventoryItem>());
-                        }
-                        break;
+                            var tabAgnosticItemSlots1 = inventoryRoot.Children.Skip(5).Take(14).Where(slot => slot.ChildCount > 1);
+                            var tabAgnosticItemSlots2 = inventoryRoot.Children.Skip(80).Take(2).Where(slot => slot.ChildCount > 1);
 
-                    case InventoryType.DeliriumStash:
-                        foreach (var item in InvRoot.Children)
-                        {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<DeliriumInventoryItem>());
+                            list.AddRange(
+                                tabAgnosticItemSlots1.Concat(tabAgnosticItemSlots2)
+                                    .Select(slot => slot[1].AsObject<BlightInventoryItem>()));
+
+                            // The Blight Stash layout has one element that can be toggled or triggered to overlay over the blight map inventory slots.
+                            if (inventoryRoot[82].IsVisibleLocal)
+                            {
+                                return list;
+                            }
+
+                            var tabSpecificItemSlots = inventoryRoot.Children.Skip(19).Take(60).Where(slot => slot.ChildCount > 1);
+                            list.AddRange(tabSpecificItemSlots.Select(slot => slot[1].AsObject<BlightInventoryItem>()));
+                            return list;
                         }
-                        break;
+
+                    case InventoryType.CurrencyStash:
+                        {
+                            var tabAgnosticItemSlots = inventoryRoot.Children.Skip(3).Where(slot => slot.ChildCount > 1);
+
+                            list.AddRange(tabAgnosticItemSlots.Select(slot => slot[1].AsObject<CurrencyInventoryItem>()));
+
+                            if (inventoryRoot[1].IsVisibleLocal)
+                            {
+                                var generalItemSlots = inventoryRoot[1].Children.Where(slot => slot.ChildCount > 1);
+                                list.AddRange(generalItemSlots.Select(slot => slot[1].AsObject<CurrencyInventoryItem>()));
+                            }
+                            else if (inventoryRoot[2].IsVisibleLocal)
+                            {
+                                var exoticItemSlots = inventoryRoot[2].Children.Where(slot => slot.ChildCount > 1);
+                                list.AddRange(exoticItemSlots.Select(slot => slot[1].AsObject<CurrencyInventoryItem>()));
+                            }
+
+                            return list;
+                        }
+
+                    case InventoryType.DelveStash:
+                        {
+                            var tabAgnosticItemSlots = inventoryRoot.Children.Where(slot => slot.ChildCount > 1);
+                            list.AddRange(tabAgnosticItemSlots.Select(slot => slot[1].AsObject<DelveInventoryItem>()));
+                            return list;
+                        }
+
+                    case InventoryType.DivinationStash:
+                        {
+                            var divinationTabSlots = inventoryRoot[0][1]
+                                ?.Children.Where(slot => slot.IsVisibleLocal && slot.ChildCount > 1 && slot[1].ChildCount > 1);
+
+                            if (divinationTabSlots == null)
+                            {
+                                return list;
+                            }
+
+                            list.AddRange(divinationTabSlots.Select(slot => slot[1][1].AsObject<DivinationInventoryItem>()));
+                            return list;
+                        }
+
+                    case InventoryType.EssenceStash:
+                        {
+                            var tabAgnosticItemSlots = inventoryRoot.Children.Where(slot => slot.ChildCount > 1);
+                            list.AddRange(tabAgnosticItemSlots.Select(slot => slot[1].AsObject<EssenceInventoryItem>()));
+                            return list;
+                        }
+
+                    case InventoryType.FlaskStash:
+                        {
+                            var subInventoriesCache = inventoryRoot.GetChildFromIndices(1, 0, 1);
+
+                            if (subInventoriesCache == null)
+                            {
+                                return list;
+                            }
+
+                            var visibleSubInventories = subInventoriesCache.Children.Where(
+                                subInventory => subInventory.IsVisibleLocal && subInventory.ChildCount > 1);
+
+                            var visibleItemSlots = visibleSubInventories.SelectMany(x => x[1].Children).Where(slot => slot.ChildCount > 1);
+
+                            list.AddRange(visibleItemSlots.Select(slot => slot[1].AsObject<FlaskInventoryItem>()));
+                            return list;
+                        }
+
+                    case InventoryType.GemStash:
+                        {
+                            var subInventoriesCache = inventoryRoot.GetChildFromIndices(1, 0, 1);
+
+                            if (subInventoriesCache == null)
+                            {
+                                return list;
+                            }
+
+                            var visibleSubInventories = subInventoriesCache.Children.Where(
+                                subInventory => subInventory.IsVisibleLocal && subInventory.ChildCount > 1);
+
+                            var visibleItemSlots = visibleSubInventories.SelectMany(x => x[1].Children).Where(slot => slot.ChildCount > 1);
+
+                            list.AddRange(visibleItemSlots.Select(slot => slot[1].AsObject<GemInventoryItem>()));
+                            return list;
+                        }
+
+                    case InventoryType.FragmentStash:
+                        {
+                            if (inventoryRoot[0].IsVisibleLocal)
+                            {
+                                var generalTabSlots = inventoryRoot[0].Children.Where(slot => slot.ChildCount > 1);
+                                list.AddRange(generalTabSlots.Select(slot => slot[1].AsObject<FragmentInventoryItem>()));
+                                return list;
+                            }
+
+                            if (inventoryRoot[1].IsVisibleLocal)
+                            {
+                                var breachTabSlots = inventoryRoot[1].Children.Where(slot => slot.ChildCount > 1);
+                                list.AddRange(breachTabSlots.Select(slot => slot[1].AsObject<FragmentInventoryItem>()));
+                                return list;
+                            }
+
+                            if (inventoryRoot[2].IsVisibleLocal)
+                            {
+                                var scarabTabSlots = inventoryRoot[2].Children.Where(slot => slot.ChildCount > 1);
+                                list.AddRange(scarabTabSlots.Select(slot => slot[1].AsObject<FragmentInventoryItem>()));
+                                return list;
+                            }
+
+                            if (inventoryRoot[3].IsVisibleLocal)
+                            {
+                                if (inventoryRoot[3].ChildCount < 2)
+                                {
+                                    return list;
+                                }
+
+                                var eldritchMavenTab = inventoryRoot[3][0].IsVisibleLocal ? inventoryRoot[3][0] :
+                                    inventoryRoot[3][1].IsVisibleLocal ? inventoryRoot[3][1] : null;
+
+                                if (eldritchMavenTab == null || eldritchMavenTab.ChildCount == 0)
+                                {
+                                    return list;
+                                }
+
+                                var eldritchMavenTabSlots = eldritchMavenTab[0]
+                                    .Children.SelectMany(row => row.Children)
+                                    .Where(slot => slot.ChildCount > 0);
+
+                                list.AddRange(eldritchMavenTabSlots.Select(slot => slot.AsObject<EldritchMavenFragmentInventoryItem>()));
+                            }
+
+                            return list;
+                        }
+
+                    case InventoryType.MapStash:
+                        {
+                            var mapTabSlots = inventoryRoot[3]
+                                .Children.FirstOrDefault(subInventory => subInventory.IsVisibleLocal)
+                                ?.Children.Where(slot => slot.ChildCount > 0);
+
+                            if (mapTabSlots == null)
+                            {
+                                return list;
+                            }
+
+                            list.AddRange(mapTabSlots.Select(slot => slot.AsObject<NormalInventoryItem>()));
+                            return list;
+                        }
 
                     case InventoryType.MetamorphStash:
-                        foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<MetamorphInventoryItem>());
+                            var tabAgnosticSlots1 = inventoryRoot.Children.Skip(1).Take(8).Where(slot => slot.ChildCount > 1);
+                            var tabAgnosticSlots2 = inventoryRoot.Children.Skip(14).Take(3).Where(slot => slot.ChildCount > 1);
+
+                            list.AddRange(
+                                tabAgnosticSlots1.Concat(tabAgnosticSlots2).Select(slot => slot[1].AsObject<MetamorphInventoryItem>()));
+
+                            var visibleSubInventory = inventoryRoot.Children.Skip(9)
+                                .Take(5)
+                                .FirstOrDefault(subInventory => subInventory.IsVisibleLocal);
+
+                            if (visibleSubInventory == null || visibleSubInventory.ChildCount <= 0)
+                            {
+                                return list;
+                            }
+
+                            var tabSpecificSlots = visibleSubInventory[0].Children.Where(slot => slot.ChildCount > 1);
+
+                            list.AddRange(tabSpecificSlots.Select(slot => slot[1].AsObject<MetamorphInventoryItem>()));
+                            return list;
                         }
-                        break;
+
+                    case InventoryType.DeliriumStash:
+                        {
+                            var tabAgnosticItemSlots = inventoryRoot.Children.Where(slot => slot.ChildCount > 1);
+                            list.AddRange(tabAgnosticItemSlots.Select(slot => slot[1].AsObject<DeliriumInventoryItem>()));
+                            return list;
+                        }
 
                     case InventoryType.UniqueStash:
-                        foreach (var item in InvRoot.Children)
                         {
-                            if (item.ChildCount > 1)
-                                list.Add(item[1].AsObject<NormalInventoryItem>());
+                            var visibleSubInventory
+                                = inventoryRoot[1].Children.FirstOrDefault(subInventory => subInventory.IsVisibleLocal)?[0]?[1];
+
+                            if (visibleSubInventory == null)
+                            {
+                                return list;
+                            }
+
+                            var uniqueItemSlots = visibleSubInventory.Children.Where(
+                                slot => slot.IsVisibleLocal && slot.ChildCount == 4 && slot[3].ChildCount > 1);
+                            list.AddRange(uniqueItemSlots.Select(slot => slot[3][1].AsObject<NormalInventoryItem>()));
+                            return list;
                         }
-                        break;
 
+                    case InventoryType.InvalidInventory:
+                    default:
+                        return list;
                 }
-
-                return list;
             }
         }
+
+        public new int X => this._data.XReal;
+
+        public int XFake => this._data.XFake;
+
+        public new int Y => this._data.YReal;
+
+        public int YFake => this._data.YFake;
+
+        private InventoryOffsets _data => this.CachedData.Value;
 
         // Works even if inventory is currently not in view.
         // As long as game have fetched inventory data from Server.
         // Will return the item based on x,y format.
-        // Give more controll to user what to do with
-        // dublicate items (items taking more than 1 slot)
+        // Give more control to user what to do with
+        // duplicate items (items taking more than 1 slot)
         // or slots where items doesn't exists (return null).
         public Entity this[int x, int y, int xLength]
         {
             get
             {
-                var invAddr = M.Read<long>(Address + 0x410, 0x640, 0x38);
+                var invAddr = this.M.Read<long>(this.Address + 0x410, 0x640, 0x38);
                 y *= xLength;
-                var itmAddr = M.Read<long>(invAddr + (x + y) * 8);
+                var itmAddr = this.M.Read<long>(invAddr + ((x + y) * 8));
 
                 if (itmAddr <= 0)
+                {
                     return null;
+                }
 
-                return ReadObject<Entity>(itmAddr);
+                return this.ReadObject<Entity>(itmAddr);
             }
         }
 
-        private InventoryType GetInvType()
+        private InventoryType GetInventoryType()
         {
-            if (_cacheInventoryType != InventoryType.InvalidInventory) return _cacheInventoryType;
+            if (this._cacheInventoryType != InventoryType.InvalidInventory)
+            {
+                return this._cacheInventoryType;
+            }
 
-            if (Address == 0) return InventoryType.InvalidInventory;
+            if (this.Address == 0)
+            {
+                return InventoryType.InvalidInventory;
+            }
 
             // For Poe MemoryLeak bug where ChildCount of PlayerInventory keep
             // Increasing on Area/Map Change. Ref:
             // http://www.ownedcore.com/forums/mmo/path-of-exile/poe-bots-programs/511580-poehud-overlay-updated-362.html#post3718876
-            // Orriginal Value of ChildCount should be 0x18
+            // Original Value of ChildCount should be 0x18
             for (var j = 1; j < InventoryList.InventoryCount; j++)
             {
-                if (TheGame.IngameState.IngameUi.InventoryPanel[(InventoryIndex)j].Address == Address)
+                if (this.TheGame.IngameState.IngameUi.InventoryPanel[(InventoryIndex)j].Address == this.Address)
                 {
-                    _cacheInventoryType = InventoryType.PlayerInventory;
-                    return _cacheInventoryType;
+                    this._cacheInventoryType = InventoryType.PlayerInventory;
+                    return this._cacheInventoryType;
                 }
             }
 
-            var parentChildCount = AsObject<Element>().Parent.ChildCount;
-
-            switch (parentChildCount)
+            switch (this.Parent.ChildCount)
             {
-                case 111:
-                    _cacheInventoryType = InventoryType.EssenceStash;
-                    break;
-                case 18:
-                    _cacheInventoryType = InventoryType.CurrencyStash;
-                    break;
-                case 149:
-                    _cacheInventoryType = InventoryType.FragmentStash;
-                    break;
-                case 5:
-                    _cacheInventoryType = InventoryType.DivinationStash;
-                    break;
-                case 7:
-                    if (Parent.Children[0].ChildCount == 9)
-                    {
-                        _cacheInventoryType = InventoryType.MapStash;
-                        break;
-                    }
-                    _cacheInventoryType = InventoryType.InvalidInventory;
-                    break;
                 case 1:
-                    // Normal Stash and Quad Stash is same.
-                    if (TotalBoxesInInventoryRow == 24) _cacheInventoryType = InventoryType.QuadStash;
-                    _cacheInventoryType = InventoryType.NormalStash;
-                    break;
-                case 35:
-                    _cacheInventoryType = InventoryType.DelveStash;
-                    break;
-                case 83:
-                    _cacheInventoryType = InventoryType.BlightStash;
-                    break;
-                case 88:
-                    _cacheInventoryType = InventoryType.DeliriumStash;
-                    break;
+                    return this._cacheInventoryType = this.TotalBoxesInInventoryRow == 24 ? InventoryType.QuadStash
+                        : InventoryType.NormalStash;
+                case 4:
+                    return this._cacheInventoryType = this.Parent[0].ChildCount == 4 ? InventoryType.GemStash :
+                        this.Parent[0].ChildCount == 5 ? InventoryType.FlaskStash : InventoryType.InvalidInventory;
+                case 5:
+                    return this._cacheInventoryType = this.Parent[0].ChildCount == 3 ? InventoryType.DivinationStash :
+                        this.Parent[0].ChildCount == 49 ? InventoryType.FragmentStash : InventoryType.InvalidInventory;
+                case 7:
+                    return this._cacheInventoryType = InventoryType.MapStash;
+                case 9:
+                    return this._cacheInventoryType = InventoryType.UniqueStash;
                 case 17:
-                    _cacheInventoryType = InventoryType.MetamorphStash;
-                    break;
-                case 9:     // TODO: Need recheck, I don't have this
-                    _cacheInventoryType = InventoryType.UniqueStash;
-                    break;
+                    return this._cacheInventoryType = InventoryType.MetamorphStash;
+                case 18:
+                    return this._cacheInventoryType = InventoryType.CurrencyStash;
+                case 35:
+                    return this._cacheInventoryType = InventoryType.DelveStash;
+                case 83:
+                    return this._cacheInventoryType = InventoryType.BlightStash;
+                case 88:
+                    return this._cacheInventoryType = InventoryType.DeliriumStash;
+                case 111:
+                    return this._cacheInventoryType = InventoryType.EssenceStash;
                 default:
-                    _cacheInventoryType = InventoryType.InvalidInventory;
-                    break;
+                    return this._cacheInventoryType = InventoryType.InvalidInventory;
             }
-
-            return _cacheInventoryType;
         }
 
-        private Element getInventoryElement()
+        private Element GetInventoryRootElement()
         {
-            switch (InvType)
+            switch (this.InvType)
             {
                 case InventoryType.PlayerInventory:
                 case InventoryType.NormalStash:
                 case InventoryType.QuadStash:
-                    return AsObject<Element>();
+                    return this;
                 case InventoryType.CurrencyStash:
-                case InventoryType.EssenceStash:
-                case InventoryType.FragmentStash:
+                case InventoryType.BlightStash:
+                case InventoryType.DeliriumStash:
                 case InventoryType.DelveStash:
-                    return AsObject<Element>().Parent;
                 case InventoryType.DivinationStash:
-                    return GetObject<Element>(M.Read<long>(Address + OffsetBuffers + 0x24, 0x08));
+                case InventoryType.EssenceStash:
+                case InventoryType.GemStash:
+                case InventoryType.FlaskStash:
+                case InventoryType.FragmentStash:
                 case InventoryType.MapStash:
-                    return AsObject<Element>().Parent.AsObject<MapStashTabElement>();
+                case InventoryType.MetamorphStash:
+                case InventoryType.UniqueStash:
+                    return this.Parent;
+                case InventoryType.InvalidInventory:
                 default:
                     return null;
             }
