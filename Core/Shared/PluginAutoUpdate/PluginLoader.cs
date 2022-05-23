@@ -118,7 +118,7 @@ namespace ExileCore.Shared.PluginAutoUpdate
                         sw.Stop();
                         var elapsedTotalMilliseconds = sw.Elapsed.TotalMilliseconds;
                         pluginWrapper.LoadedTime = elapsedTotalMilliseconds;
-                        DebugWindow.LogMsg($"{pluginWrapper.Name} loaded in {elapsedTotalMilliseconds} ms.", 1, Color.Orange);
+                        DebugWindow.LogDebug($"{pluginWrapper.Name} loaded in {elapsedTotalMilliseconds} ms.", 1);
 
                         pluginWrappers.Add(pluginWrapper);
                     }

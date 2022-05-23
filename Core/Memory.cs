@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -397,7 +397,7 @@ namespace ExileCore
                 var found = false;
 
                 using (new PerformanceTimer($"Pattern: {pattern.Name} -> ", 0,
-                    (s, span) => DebugWindow.LogMsg(
+                    (s, span) => DebugWindow.LogDebug(
                         $"{s}: Time: {span.TotalMilliseconds} ms. Offset:[{address[iPattern]}] Started searching offset with:{pattern.StartOffset}"),
                     false))
                 {

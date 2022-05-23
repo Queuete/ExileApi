@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -164,9 +164,10 @@ namespace ExileCore
 
             return false;
         }
-
+        
         private static void HandleType(SettingsHolder holder, object type, string propertyInfo)
         {
+
             switch (type)
             {
                 case ButtonNode buttonNode:
@@ -341,9 +342,6 @@ namespace ExileCore
                     };
                     return;
             }
-
-            DebugWindow.LogDebug(
-                $"SettingsParser => DrawDelegate not auto-generated for '{propertyInfo}'.");
         }
 
         private static List<ISettingsHolder> GetAllDrawers(List<ISettingsHolder> settingPropertyDrawers)

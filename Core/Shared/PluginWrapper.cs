@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -134,7 +134,7 @@ namespace ExileCore.Shared
             {
                 var elapsedTotalMilliseconds = sw.Elapsed.TotalMilliseconds;
                 InitialiseTime = elapsedTotalMilliseconds;
-                DebugWindow.LogMsg($"{Name} -> Initialise time: {elapsedTotalMilliseconds} ms.",1,Color.Yellow);
+                DebugWindow.LogDebug($"{Name} -> Initialise time: {elapsedTotalMilliseconds} ms.");
             }
 
             return initialise;
