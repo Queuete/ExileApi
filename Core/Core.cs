@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +19,8 @@ using ExileCore.Threads;
 using ImGuiNET;
 using JM.LinqFaster;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using SharpDX.Windows;
 using Color = SharpDX.Color;
 
@@ -68,6 +70,17 @@ namespace ExileCore
         private int ticks;
         private double _targetPcFrameTime;
         private double _deltaTargetPcFrameTime;
+
+        private void UpdateLogLevel(string level)
+        {
+            if (Enum.TryParse(level, false, out LogEventLevel logLevel))
+            {
+                DebugWindow.LogMsg($"Changing level to {level}");
+                LoggingLevel.MinimumLevel = logLevel;
+                ExileCore.Logger.LoggingLevel.MinimumLevel = logLevel;
+            }
+        }
+
         public Core(RenderForm form)
         {
             try
@@ -92,6 +105,11 @@ namespace ExileCore
                 FormHandle = _form.Handle;
                 _settings = new SettingsContainer();
                 _coreSettings = _settings.CoreSettings;
+
+                this.UpdateLogLevel(this._coreSettings.LoggingLevel.Value);
+
+                this._coreSettings.LoggingLevel.OnValueSelected += this.UpdateLogLevel;
+
                 _coreSettings.Threads = new RangeNode<int>(_coreSettings.Threads.Value, 0, Environment.ProcessorCount);
                 CoroutineRunner = new Runner("Main Coroutine");
                 CoroutineRunnerParallel = new Runner("Parallel Coroutine");
@@ -107,7 +125,7 @@ namespace ExileCore
                         {
                             if (versionChecker.AutoUpdate.IsDownloading)
                             {
-                                DebugWindow.LogMsg("Core -> Currently downloading update, dont check again..."); 
+                                DebugWindow.LogDebug("Core -> Currently downloading update, dont check again..."); 
                                 Thread.Sleep(10 * 1000);
                                 continue;
                             }
@@ -116,7 +134,8 @@ namespace ExileCore
                             Thread.Sleep(100 * 1000);
                         }
                     });
-                }                                    
+                }
+
                 DebugWindow.LogMsg($"Core -> Windows 10 is the only supported system!");
 
                 using (new PerformanceTimer("DX11 Load"))
@@ -180,8 +199,7 @@ namespace ExileCore
 
                 if (GameController == null && _memory != null) Inject();
 
-                var coroutine = new Coroutine(MainControl(), null, "Render control")
-                    {Priority = CoroutinePriority.Critical};
+                var coroutine = new Coroutine(MainControl(), null, "Render control") { Priority = CoroutinePriority.Critical };
 
                 CoroutineRunnerParallel.Run(coroutine);
                 NextCoroutineTime = Time.TotalMilliseconds;
@@ -200,7 +218,12 @@ namespace ExileCore
             }
         }
 
+        // Initialized in Loader.
+        public static LoggingLevelSwitch LoggingLevel { get; set; }
+
+        // Initialized in Loader.
         public static ILogger Logger { get; set; }
+
         public static Runner MainRunner { get; set; }
         public static Runner ParallelRunner { get; set; }
         public static uint FramesCount { get; private set; }
@@ -262,7 +285,7 @@ namespace ExileCore
                     clientRectangle.Width > 2 &&
                     clientRectangle.Height > 2)
                 {
-                    DebugWindow.LogMsg($"Resize from: {lastClientBound} to {clientRectangle}", 5, Color.Magenta);
+                    DebugWindow.LogDebug($"Resize from: {lastClientBound} to {clientRectangle}");
                     lastClientBound = clientRectangle;
                     _form.Invoke(new Action(() => { _form.Bounds = clientRectangle; }));
                 }
@@ -289,7 +312,7 @@ namespace ExileCore
             var pid = FindPoeProcess();
 
             if (!pid.HasValue || pid.Value.process.Id == 0)
-                DebugWindow.LogMsg("Game not found");
+                DebugWindow.LogError("Game not found");
             else
                 return new Memory(pid.Value);
 
@@ -485,7 +508,7 @@ namespace ExileCore
                         }
                         catch (Exception e)
                         {
-                            DebugWindow.LogMsg($"Coroutine Parallel error: {e.Message}", 6, Color.White);
+                            DebugWindow.LogError($"Coroutine Parallel error: {e.Message}");
                         }
                     }
                     else
@@ -505,7 +528,7 @@ namespace ExileCore
             }
             catch (Exception e)
             {
-                DebugWindow.LogMsg($"Coroutine Parallel error: {e.Message}", 6, Color.White);
+                DebugWindow.LogError($"Coroutine Parallel error: {e.Message}");
                 throw;
             }
         }

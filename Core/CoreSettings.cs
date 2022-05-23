@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using ExileCore.RenderQ;
 using ExileCore.Shared.Attributes;
@@ -7,6 +7,9 @@ using ExileCore.Shared.Nodes;
 
 namespace ExileCore
 {
+    using System;
+    using Serilog.Events;
+
     public class CoreSettings : ISettings
     {
         public ToggleNode Enable { get; set; } = new ToggleNode(true);
@@ -42,6 +45,10 @@ namespace ExileCore
         public ToggleNode ShowDebugWindow { get; set; } = new ToggleNode(false);
         [Menu("Debug Information", "With this option you can check how much every plugin works.", 6, 2000)]
         public ToggleNode CollectDebugInformation { get; set; } = new ToggleNode(false);
+
+        [Menu("Minimum Log Level", "Verbose logs everything. Each option down the list reduces the amount of information written to the log file.", 7, 2000)]
+        public ListNode LoggingLevel { get; set; } = new ListNode { Values = new List<string>(Enum.GetNames(typeof(LogEventLevel))), Value = "Error" };
+
         #endregion
 
         #region performance
@@ -93,7 +100,7 @@ namespace ExileCore
         [Menu("Miscellaneous", 5000)]
         public EmptyNode EmptyMiscellaneous { get; set; } = new EmptyNode();
         [Menu("Font", 1, 5000)]
-        public ListNode Font { get; set; } = new ListNode {Values = new List<string> {"Not found"}};
+        public ListNode Font { get; set; } = new ListNode { Values = new List<string> { "Not found" } };
         [IgnoreMenu] // "Currently not works. Because this option broke calculate how much pixels needs for render."
         public RangeNode<int> FontSize { get; set; } = new RangeNode<int>(13, 7, 36);
         [Menu("Volume", 3, 5000)]

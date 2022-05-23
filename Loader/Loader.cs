@@ -10,11 +10,15 @@ using SharpDX.Windows;
 
 namespace Loader
 {
+    using Serilog.Core;
+    using Serilog.Events;
+
     public class Loader
     {
         private const string AttentionSign = "===============";
 
         private ILogger _logger;
+        private LoggingLevelSwitch _loggingLevel;
         private Assembly _coreDll;
         private Stopwatch _stopwatch;
         private Type _coreType;
@@ -71,17 +75,30 @@ namespace Loader
             executeCommandMethodInfo.Invoke(null, new object[] { command });
         }
 
+        /// <summary>
+        ///     Initializes the logger.
+        /// </summary>
+        /// <remarks>
+        ///     It is important to note that the minimum logging level can only be raised for sinks, not lowered. The minimum
+        ///     level set at initialize establishes the minimum level of messages it will process during the sink lifetime. We
+        ///     can raise the level to filter messages we don't want to write to a console or file, but we can't lower it below
+        ///     the initial minimum level. We initialize the switch at the Verbose level to catch everything, then we can filter
+        ///     by changing the MinimumLevel of the switch from within the app.
+        /// </remarks>
         private void LoadLogger()
         {
-            var loggerType = GetTypeFromCoreDll("ExileCore.Logger");
-            var loggerPropertyInfo = loggerType.GetProperty("Log") ??
-                                     throw new InvalidOperationException("Not found Log property in Logger class.");
-            _logger = loggerPropertyInfo.GetValue(null) as ILogger ?? throw new InvalidOperationException("Logger can't be null.");
+            _loggingLevel = new LoggingLevelSwitch(LogEventLevel.Verbose);
+            _logger = new LoggerConfiguration()
+                .MinimumLevel
+                .ControlledBy(_loggingLevel)
+                .WriteTo
+                .File(@"Logs\Verbose-.log", rollingInterval: RollingInterval.Day).CreateLogger();
         }
 
         private void LoadCoreType()
         {
             _coreType = GetTypeFromCoreDll("ExileCore.Core");
+            _coreType.GetProperty("LoggingLevel")?.SetValue(null, _loggingLevel);
             _coreType.GetProperty("Logger")?.SetValue(null, _logger);
         }
 
