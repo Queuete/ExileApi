@@ -1,13 +1,21 @@
-﻿using ExileCore.PoEMemory.MemoryObjects;
-using ExileCore.Shared.Enums;
-using ExileCore.Shared.Helpers;
-using GameOffsets.Native;
-using GameOffsets;
-using ExileCore.Shared.Cache;
-
-namespace ExileCore.PoEMemory.Components
+﻿namespace ExileCore.PoEMemory.Components
 {
-    public class HeistRewardDisplay: Component
+    using ExileCore.PoEMemory.MemoryObjects;
+    using ExileCore.Shared.Cache;
+    using GameOffsets;
+
+    public class HeistRewardDisplay : Component
     {
+        private readonly CachedValue<HeistRewardDisplayComponentOffsets> CachedData;
+
+        public HeistRewardDisplay()
+        {
+            this.CachedData
+                = new FrameCache<HeistRewardDisplayComponentOffsets>(() => this.M.Read<HeistRewardDisplayComponentOffsets>(this.Address));
+        }
+
+        public Entity RewardItem => this.GetObject<Entity>(this._data.RewardItemKey);
+
+        private HeistRewardDisplayComponentOffsets _data => this.CachedData.Value;
     }
 }
