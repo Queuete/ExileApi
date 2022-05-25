@@ -84,15 +84,22 @@ namespace Loader
         ///     can raise the level to filter messages we don't want to write to a console or file, but we can't lower it below
         ///     the initial minimum level. We initialize the switch at the Verbose level to catch everything, then we can filter
         ///     by changing the MinimumLevel of the switch from within the app.
+        ///
+        ///     Buffered is enabled, so if you are actually trying debug through log monitoring, consider setting Buffered to
+        ///     false.
         /// </remarks>
         private void LoadLogger()
         {
             _loggingLevel = new LoggingLevelSwitch(LogEventLevel.Verbose);
-            _logger = new LoggerConfiguration()
-                .MinimumLevel
-                .ControlledBy(_loggingLevel)
-                .WriteTo
-                .File(@"Logs\Verbose-.log", rollingInterval: RollingInterval.Day).CreateLogger();
+
+            _logger = new LoggerConfiguration().MinimumLevel.ControlledBy(_loggingLevel)
+                .WriteTo.File(
+                    @"Logs\Verbose-.log",
+                    rollingInterval: RollingInterval.Day,
+                    fileSizeLimitBytes: null,
+                    retainedFileCountLimit: 3,
+                    buffered: true)
+                .CreateLogger();
         }
 
         private void LoadCoreType()
