@@ -14,6 +14,7 @@ using ExileCore.Shared.Static;
 namespace ExileCore.PoEMemory
 {
     using System.Threading.Tasks;
+    using ExileCore.Shared.Enums;
 
     public class FilesContainer
     {
@@ -42,6 +43,10 @@ namespace ExileCore.PoEMemory
         private StatsDat _Stats;
         private TagsDat _Tags;
         private WorldAreas _WorldAreas;
+        private UniqueStashLayoutsDat _UniqueItemDescriptions;
+        private ItemVisualIdentitiesDat _ItemVisualIdentities;
+        private GroundEffectsDat _GroundEffects;
+        private GroundEffectTypesDat _GroundEffectTypes;
 
         public FilesContainer(IMemory memory)
         {
@@ -64,6 +69,29 @@ namespace ExileCore.PoEMemory
 
         #region Misc
 
+        public UniqueStashLayoutsDat UniqueItemDescriptions
+        {
+            get
+            {
+                if (this._UniqueItemDescriptions != null && this._UniqueItemDescriptions.Address != 0)
+                {
+                    return this._UniqueItemDescriptions;
+                }
+
+                var inventories = RemoteMemoryObject.pTheGame?.IngameState?.IngameUi?.StashElement?.AllInventories?.ToList();
+                if (inventories != null && inventories.Any(
+                    inv => inv != null && inv.InvType == InventoryType.UniqueStash))
+                {
+                    this.ReloadFiles();
+                }
+
+                return this._UniqueItemDescriptions = new UniqueStashLayoutsDat(this._Memory, () => this.FindFile("Data/UniqueStashLayout.dat"));
+            }
+        }
+
+        public ItemVisualIdentitiesDat ItemVisualIdentities => this._ItemVisualIdentities
+         ?? (_ItemVisualIdentities = new ItemVisualIdentitiesDat(this._Memory, () => this.FindFile("Data/ItemVisualIdentity.dat")));
+
         public ItemClasses ItemClasses { get; }
 
         public BaseItemTypes BaseItemTypes =>
@@ -73,6 +101,13 @@ namespace ExileCore.PoEMemory
         public StatsDat Stats => _Stats = _Stats ?? new StatsDat(_Memory, () => FindFile("Data/Stats.dat"));
         public TagsDat Tags => _Tags = _Tags ?? new TagsDat(_Memory, () => FindFile("Data/Tags.dat"));
         public WorldAreas WorldAreas => _WorldAreas = _WorldAreas ?? new WorldAreas(_Memory, () => FindFile("Data/WorldAreas.dat"));
+
+        public GroundEffectsDat GroundEffects => this._GroundEffects ?? (this._GroundEffects = new GroundEffectsDat(
+            this._Memory,
+            () => this.FindFile("Data/GroundEffects.dat")));
+
+        public GroundEffectTypesDat GroundEffectTypes => this._GroundEffectTypes
+         ?? (this._GroundEffectTypes = new GroundEffectTypesDat(this._Memory, () => this.FindFile("Data/GroundEffectTypes.dat")));
 
         public PassiveSkills PassiveSkills =>
             _PassiveSkills = _PassiveSkills ?? new PassiveSkills(_Memory, () => FindFile("Data/PassiveSkills.dat"));
