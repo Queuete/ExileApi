@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
@@ -163,7 +163,7 @@ namespace ExileCore.PoEMemory.MemoryObjects
         {
             get
             {
-                var statsPtr = M.Read<long>(Address + 0xA0);
+                var statsPtr = M.Read<long>(Address + 0x80);
                 var result = new Dictionary<GameStat, int>();
 
                 ReadStats(result, statsPtr);
