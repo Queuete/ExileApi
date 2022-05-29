@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ExileCore.PoEMemory.Components;
 using ExileCore.Shared.Cache;
@@ -543,6 +543,30 @@ namespace ExileCore.PoEMemory.MemoryObjects
             }
 
             return null;
+        }
+
+        public bool TryGetComponent<T>(out T component) where T : Component, new()
+        {
+            component = default(T);
+
+            if (this._cacheComponents.TryGetValue(typeof(T), out var result))
+            {
+                component = (T)result;
+                return true;
+            }
+
+            if (this.CacheComp.TryGetValue(typeof(T).Name, out var componentAddress))
+            {
+                component = this.GetObject<T>(componentAddress);
+
+                if (component != null)
+                {
+                    this._cacheComponents[typeof(T)] = component;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool CheckComponentForValid<T>() where T : Component, new()
