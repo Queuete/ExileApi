@@ -1,4 +1,4 @@
-#define DebugKeys
+﻿#define DebugKeys
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -198,11 +198,13 @@ namespace ExileCore
             {
                 case MouseButtons.Left:
                     MouseMove();
-                    WinApi.mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                    WinApi.mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
+                    WinApi.mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
                     break;
                 case MouseButtons.Right:
                     MouseMove();
-                    WinApi.mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
+                    WinApi.mouse_event(MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0);
+                    WinApi.mouse_event(MOUSEEVENTF_RIGHTUP, 0, 0, 0, 0);
                     break;
             }
         }
