@@ -81152,6 +81152,61 @@
         /// </summary>
         OffHandMtxTreasureExplosionOnKill = 16230,
 
+        /// <summary>
+        /// scorch_ailment_effect_on_self_+%
+        /// </summary>
+        ScorchAilmentEffectOnSelfPct = 16231,
+
+        /// <summary>
+        /// cold_ailment_effect_on_self_+%
+        /// </summary>
+        ColdAilmentEffectOnSelfPct = 16232,
+
+        /// <summary>
+        /// lightning_ailment_effect_on_self_+%
+        /// </summary>
+        LightningAilmentEffectOnSelfPct = 16233,
+
+        /// <summary>
+        /// virtual_frostburn_effect_on_self_+%
+        /// </summary>
+        VirtualFrostburnEffectOnSelfPct = 16234,
+
+        /// <summary>
+        /// virtual_scorch_effect_on_self_+%
+        /// </summary>
+        VirtualScorchEffectOnSelfPct = 16235,
+
+        /// <summary>
+        /// virtual_sap_effect_on_self_+%
+        /// </summary>
+        VirtualSapEffectOnSelfPct = 16236,
+
+        /// <summary>
+        /// sentinel_player_level
+        /// </summary>
+        SentinelPlayerLevel = 16237,
+
+        /// <summary>
+        /// equipped_body_armour_is_corrupted
+        /// </summary>
+        EquippedBodyArmourIsCorrupted = 16238,
+
+        /// <summary>
+        /// equipped_helmet_is_corrupted
+        /// </summary>
+        EquippedHelmetIsCorrupted = 16239,
+
+        /// <summary>
+        /// equipped_gloves_are_corrupted
+        /// </summary>
+        EquippedGlovesAreCorrupted = 16240,
+
+        /// <summary>
+        /// equipped_boots_are_corrupted
+        /// </summary>
+        EquippedBootsAreCorrupted = 16241,
+
 
     }
 }
