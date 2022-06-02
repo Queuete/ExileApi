@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -191,6 +191,24 @@ namespace ExileCore.PoEMemory
             return new RectangleF(num, num2, xScale * Width * Scale / rootScale, yScale * Height * Scale / rootScale);
         }
 
+        public bool TryGetChildFromIndices(out Element child, params int[] indices)
+        {
+            child = default(Element);
+
+            var currentElement = this;
+            foreach (var index in indices)
+            {
+                currentElement = currentElement[index];
+
+                if (currentElement == null)
+                {
+                    return false;
+                }
+            }
+            child = currentElement;
+            return true;
+        }
+
         public Element GetChildFromIndices(params int[] indices)
         {
             var currentElement = this;
@@ -222,13 +240,18 @@ namespace ExileCore.PoEMemory
 
                 if (currentElement == null)
                 {
-                    DebugWindow.LogMsg($"{nameof(Element)} with index {index} was not found. Indices: {BuildErrorString(indexNumber)}");
+                    // TODO: Should probably throw instead of spamming message.
+                    DebugWindow.LogDebug($"{nameof(Element)} with index {index} was not found. Indices: {BuildErrorString(indexNumber)}");
                     return null;
                 }
 
                 if (currentElement.Address == 0)
                 {
-                    DebugWindow.LogMsg($"{nameof(Element)} with index {index} has address = 0. Indices: {BuildErrorString(indexNumber)}");
+                    // TODO: Should probably throw instead of spamming message.
+                    DebugWindow.LogDebug($"{nameof(Element)} with index {index} has address = 0. Indices: {BuildErrorString(indexNumber)}");
+
+                    // TODO: Be consistent and just return null since we didn't find the actual element we wanted. This requires user check if
+                    //       the returned element is has a valid address, something we know isn't true already.
                     return GetObject<Element>(0);
                 }
             }
