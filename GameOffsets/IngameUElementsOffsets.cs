@@ -41,7 +41,8 @@ namespace GameOffsets
         [FieldOffset(0x850)] public long UnveilWindow;
         [FieldOffset(0x878)] public long SynthesisWindow;
         [FieldOffset(0x890)] public long MetamorphWindow;
-        [FieldOffset(0x8A0)] public long HarvestWindow;
+        [FieldOffset(0x898)] public long HorticraftingSacredGrovePanel;
+        [FieldOffset(0x8A0)] public long HorticraftingHideoutPanel;
         [FieldOffset(0x8A8)] public long HeistContractPanel;
         [FieldOffset(0x8B0)] public long HeistRevealPanel;
         [FieldOffset(0x8B8)] public long HeistAllyEquipmentPanel;
@@ -207,7 +208,7 @@ namespace GameOffsets
         // [FieldOffset(0x880)] public readonly long BlightAnointItemPanel;
         // [FieldOffset(0x888)] public readonly long OldMetamorphPanel;
         // [FieldOffset(0x890)] public readonly long MetamorphPanel;
-        // [FieldOffset(0x898)] public readonly long OldHarvestCraftingPanel;
+        // [FieldOffset(0x898)] public readonly long SacredGroveHorticraftingPanel;
         // [FieldOffset(0x8A0)] public readonly long HorticraftingPanel;
         // [FieldOffset(0x8A8)] public readonly long HeistContractPanel;
         // [FieldOffset(0x8B0)] public readonly long HeistRevealPanel;
