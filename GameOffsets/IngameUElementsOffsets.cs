@@ -37,8 +37,8 @@ namespace GameOffsets
         [FieldOffset(0x818)] public long DelveWindow;
         [FieldOffset(0x828)] public long ZanaMissionChoice;
         [FieldOffset(0x838)] public long BetrayalWindow;
-        [FieldOffset(0x848)] public long CraftBenchWindow;
-        [FieldOffset(0x850)] public long UnveilWindow;
+        [FieldOffset(0x850)] public long CraftBenchWindow;
+        [FieldOffset(0x858)] public long UnveilWindow;
         [FieldOffset(0x878)] public long SynthesisWindow;
         [FieldOffset(0x890)] public long MetamorphWindow;
         [FieldOffset(0x898)] public long HorticraftingSacredGrovePanel;
