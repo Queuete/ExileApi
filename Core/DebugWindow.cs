@@ -61,6 +61,10 @@ namespace ExileCore
                         ImGui.TextUnformatted($"{msg.Time.ToLongTimeString()}: {msg.Msg}");
                         ImGui.PopStyleColor();
                     }
+                    if (ImGui.GetScrollY() >= ImGui.GetScrollMaxY())
+                    {
+                        ImGui.SetScrollHereY(1.0f);
+                    }
 
                     ImGui.PopFont();
                     ImGui.End();
