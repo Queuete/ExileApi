@@ -19,7 +19,7 @@ namespace GameOffsets
         [FieldOffset(0x588)] public long StashElement;
         [FieldOffset(0x590)] public long GuildStashElement;
         [FieldOffset(0x628)] public long AtlasPanel;
-        [FieldOffset(0x298)] public long AtlasSkillPanel;
+        [FieldOffset(0x630)] public long AtlasSkillPanel;
         [FieldOffset(0x660)] public long WorldMap;
         [FieldOffset(0x6A0)] public long Map;
         [FieldOffset(0x6A8)] public long itemsOnGroundLabelRoot;
