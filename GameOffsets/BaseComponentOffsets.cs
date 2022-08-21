@@ -7,9 +7,12 @@ namespace GameOffsets
     {
         [FieldOffset(0x10)] public byte ItemCellSizeX;
         [FieldOffset(0x11)] public byte ItemCellSizeY;
-        [FieldOffset(0x18)] public long NameKey;
-        //[FieldOffset(0x38)] public long BaseItemsTypeKey;
-        //[FieldOffset(0x48)] public NativePtrArray TagKeys;
+        [FieldOffset(0x30)] public long NameKey;
+        [FieldOffset(0x78) public string ItemDescription;
+        [FieldOffset(0x80) public string PtrEntityPath; //offset 0 from this leads back to "Metadata/..."
+        [FieldOffset(0x88) public string ItemType; //offset 0 from this
+        [FieldOffset(0x90) public long BaseItemTypesPtr; 
+        [FieldOffset(0x98) public string XBoxControllerItemDescription;
     }
 
     [StructLayout(LayoutKind.Explicit, Pack = 1)]
@@ -23,5 +26,6 @@ namespace GameOffsets
         [FieldOffset(0xC7)] public byte isCorrupted;
         [FieldOffset(0xC8)] public int UnspentAbsorbedCorruption;
         [FieldOffset(0xCC)] public int ScourgedTier;
+        
     }
 }
