@@ -182,6 +182,50 @@ namespace ExileCore
                 case EmptyNode _:
                     holder.DrawDelegate = () => { };
                     return;
+                case ToggleHotkeyNode toggleHotkeyNode:
+                    holder.DrawDelegate = () =>
+                    {
+
+                        ImGui.Columns(2);
+                        ImGui.SetColumnWidth(0, 35);
+                        var isChecked = toggleHotkeyNode.Enabled;
+                        ImGui.Checkbox("  " + holder.Unique, ref isChecked);
+                        toggleHotkeyNode.Enabled = isChecked;
+                        ImGui.NextColumn();
+
+                        var str = $"{holder.Name} {toggleHotkeyNode.Value}##{toggleHotkeyNode.Value}";
+                        var popupOpened = true;
+
+                        if (ImGui.Button(str))
+                        {
+                            ImGui.OpenPopup(str);
+                            popupOpened = true;
+                        }
+                        ImGui.NextColumn();
+
+                        if (!ImGui.BeginPopupModal(str, ref popupOpened,
+                            ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse))
+                            return;
+
+                        if (Input.GetKeyState(Keys.Escape))
+                        {
+                            ImGui.CloseCurrentPopup();
+                            ImGui.EndPopup();
+                            return;
+                        }
+
+                        foreach (var key in Enum.GetValues(typeof(Keys)))
+                        {
+                            if (!Input.GetKeyState((Keys)key)) continue;
+                            toggleHotkeyNode.Value = (Keys)key;
+                            ImGui.CloseCurrentPopup();
+                            break;
+                        }
+
+                        ImGui.Text($"Press new key to change '{toggleHotkeyNode.Value}' or Esc for exit.");
+                        ImGui.EndPopup();
+                    };
+                    return;
                 case HotkeyNode hotkeyNode:
                     holder.DrawDelegate = () =>
                     {
